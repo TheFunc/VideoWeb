@@ -29,15 +29,6 @@ const router = createRouter({
       },
     },
     {
-      path: '/safety-instruction',
-      name: 'safety-instruction',
-      component: () => import('@/views/SafetyInstructionView.vue'),
-      meta: {
-        title: '电梯使用安全说明',
-        transition: 'page-fade',
-      },
-    },
-    {
       path: '/image-text',
       name: 'image-text',
       component: () => import('@/views/ImageTextView.vue'),

@@ -1,6 +1,6 @@
 <template>
   <header class="logo-header">
-    <!-- 第一行：Logo 和标题 -->
+    <!-- 顶部导航栏：Logo、标题和主题切换 -->
     <div class="header-top">
       <div class="logo-left">
         <div class="logo-icon">
@@ -13,21 +13,9 @@
           <span class="logo-subtitle">{{ pageSubtitle }}</span>
         </div>
       </div>
-      <div class="logo-right-spacer"></div>
-    </div>
-    
-    <!-- 第二行：主题切换和安全说明 -->
-    <div class="header-bottom">
-      <div class="header-left">
+      <div class="logo-right">
         <button class="theme-toggle-btn" @click="toggleTheme" :title="isDarkMode ? '切换到浅色模式' : '切换到深色模式'">
           <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
-        </button>
-      </div>
-      
-      <div class="header-right">
-        <button class="safety-btn" @click="goToSafety">
-          <span class="btn-icon">📋</span>
-          <span class="btn-text">安全说明</span>
         </button>
       </div>
     </div>
@@ -39,18 +27,8 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useTheme } from '@/composables/useTheme'
 
-const router = useRouter()
 const route = useRoute()
 const { isDarkMode, toggleTheme } = useTheme()
-
-// 判断是否在播放页面
-const isPlayPage = computed(() => {
-  return route.name === 'play'
-})
-
-function goToSafety() {
-  router.push('/safety-instruction')
-}
 
 // 根据当前路由动态生成页面标题
 const pageTitle = computed(() => {
@@ -64,8 +42,6 @@ const pageTitle = computed(() => {
     return '安全讲堂'
   } else if (path === '/video-warning') {
     return '视频警示'
-  } else if (path === '/safety-instruction') {
-    return '安全说明'
   } else if (route.name === 'play') {
     return '电梯视频'
   } else {
@@ -85,8 +61,6 @@ const pageSubtitle = computed(() => {
     return 'Safety Class'
   } else if (path === '/video-warning') {
     return 'Video Warning'
-  } else if (path === '/safety-instruction') {
-    return 'Safety Instructions'
   } else if (route.name === 'play') {
     return 'Elevator Video'
   } else {
@@ -105,14 +79,13 @@ const pageSubtitle = computed(() => {
   transition: all 0.3s ease;
 }
 
-/* 第一行：Logo 和标题 - 带背景图片 */
+/* 顶部导航栏：Logo、标题和主题切换 */
 .header-top {
   display: flex;
   align-items: center;
   padding: 16px 30px;
   min-height: 80px;
   background: url('/background.jpg') center center / cover no-repeat;
-  border-radius: 0 0 12px 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
@@ -135,9 +108,11 @@ body.dark-mode .header-top {
   justify-content: center;
 }
 
-.logo-right-spacer {
+.logo-right {
   flex: 0 0 auto;
-  width: 40px;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
 }
 
 .logo-icon {
@@ -184,82 +159,33 @@ body.dark-mode .logo-subtitle {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9), -1px -1px 1px rgba(0, 0, 0, 0.9);
 }
 
-/* 第二行：操作按钮区域 */
-.header-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 30px;
-  min-height: 50px;
-  border-top: 1px solid var(--border-color);
-}
-
-.header-left {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-}
-
-.header-right {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-}
-
-/* 主题切换按钮 */
+/* 主题切换按钮 - 与背景融合的风格 */
 .theme-toggle-btn {
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-secondary);
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .theme-toggle-btn:hover {
-  background: var(--primary-bg);
-  border-color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.4);
   transform: rotate(180deg);
 }
 
-.safety-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #4a9af5, #1a73e8);
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.2);
-  white-space: nowrap;
+body.dark-mode .theme-toggle-btn {
+  background: rgba(0, 0, 0, 0.2);
 }
 
-.safety-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
-  background: linear-gradient(135deg, #5aa5f6, #2a83f8);
-}
-
-.safety-btn:active {
-  transform: translateY(0);
-}
-
-.btn-icon {
-  font-size: 16px;
-}
-
-.btn-text {
-  white-space: nowrap;
+body.dark-mode .theme-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.35);
 }
 
 /* 响应式设计 */
@@ -269,31 +195,12 @@ body.dark-mode .logo-subtitle {
     min-height: 70px;
   }
   
-  .header-bottom {
-    padding: 10px 20px;
-    gap: 12px;
-  }
-  
   .logo-img {
     height: 48px;
   }
   
   .logo-title {
     font-size: 20px;
-  }
-  
-  .safety-btn .btn-text {
-    display: none;
-  }
-  
-  .safety-btn {
-    padding: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .header-bottom {
-    gap: 8px;
   }
 }
 
