@@ -101,22 +101,25 @@ const pageSubtitle = computed(() => {
   z-index: 10;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
   border-bottom: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
 
-/* 深色模式下 header 背景 */
-body.dark-mode .logo-header {
-  background: var(--bg-card);
-}
-
-/* 第一行：Logo 和标题 */
+/* 第一行：Logo 和标题 - 带背景图片 */
 .header-top {
   display: flex;
   align-items: center;
   padding: 16px 30px;
   min-height: 80px;
+  background: url('/background.jpg') center center / cover no-repeat;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 深色模式下 header-top 背景 */
+body.dark-mode .header-top {
+  background: url('/background.jpg') center center / cover no-repeat;
+  opacity: 0.9;
 }
 
 .logo-left {
@@ -157,19 +160,28 @@ body.dark-mode .logo-header {
 .logo-title {
   font-size: 24px;
   font-weight: 700;
-  background: linear-gradient(135deg, #4a9af5, #1a73e8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #1a73e8;
   letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9), -1px -1px 2px rgba(255, 255, 255, 0.9);
 }
 
 .logo-subtitle {
   font-size: 11px;
-  color: var(--text-secondary);
+  color: #444;
   letter-spacing: 4px;
   text-transform: uppercase;
   margin-top: 4px;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9), -1px -1px 1px rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .logo-title {
+  color: #4a9af5;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9), -1px -1px 2px rgba(0, 0, 0, 0.9);
+}
+
+body.dark-mode .logo-subtitle {
+  color: #9aa5b4;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9), -1px -1px 1px rgba(0, 0, 0, 0.9);
 }
 
 /* 第二行：操作按钮区域 */

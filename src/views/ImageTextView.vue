@@ -289,7 +289,7 @@ onUnmounted(() => {
   background: var(--bg-primary);
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 0;
 }
 
 /* 筛选区域 */
