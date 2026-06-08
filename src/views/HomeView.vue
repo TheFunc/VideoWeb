@@ -5,7 +5,12 @@
     <!-- 底部菜单栏 -->
     <BottomNavbar />
 
-    <!-- 轮播器区域 - 在菜单栏下方 -->
+    <!-- 标题：电梯安全科普平台 -->
+    <div class="platform-title">
+      <h1>电梯安全科普平台</h1>
+    </div>
+
+    <!-- 轮播器区域 - 在标题下方 -->
     <div class="carousel-section">
       <!-- 卡片容器 -->
       <div class="carousel-card">
@@ -138,6 +143,27 @@ onUnmounted(() => {
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px 40px 40px;
+}
+
+/* 平台标题 */
+.platform-title {
+  text-align: center;
+  padding: 24px 40px;
+  margin: 0;
+  background: transparent;
+}
+
+.platform-title h1 {
+  color: #667eea;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 4px;
+}
+
+/* 深色模式下的标题 */
+body.dark-mode .platform-title h1 {
+  color: #a78bfa;
 }
 
 /* 卡片容器 */
