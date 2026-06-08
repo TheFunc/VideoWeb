@@ -47,6 +47,86 @@
         </div>
       </div>
     </div>
+
+    <!-- 三个功能卡片区域 -->
+    <div class="cards-section">
+      <div class="cards-container">
+        <!-- 法规天地卡片 -->
+        <div class="feature-card">
+          <div class="card-image-wrapper">
+            <img src="/card-regulations.png" alt="法规天地" class="card-image" />
+            <div class="card-overlay">
+              <span class="card-badge regulations-badge">法规天地</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">法规天地</h3>
+            <p class="card-description">了解电梯相关法规标准</p>
+            <router-link to="/regulations" class="card-button regulations-btn">
+              查看更多
+              <span class="button-arrow">→</span>
+            </router-link>
+            <div class="card-slogan">
+              <p>一、遵守电梯安全管理规定</p>
+              <p>二、严禁超载运行，注意载重限额</p>
+              <p>三、等待电梯时请站在黄色安全线内</p>
+              <p>四、电梯未到位严禁强行扒门</p>
+              <p>五、乘梯过程中严禁蹦跳打闹</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 安全讲堂卡片 -->
+        <div class="feature-card">
+          <div class="card-image-wrapper">
+            <img src="/card-safety.png" alt="安全讲堂" class="card-image" />
+            <div class="card-overlay">
+              <span class="card-badge safety-badge">安全讲堂</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">安全讲堂</h3>
+            <p class="card-description">学习电梯安全使用知识</p>
+            <router-link to="/image-text" class="card-button safety-btn">
+              查看更多
+              <span class="button-arrow">→</span>
+            </router-link>
+            <div class="card-slogan">
+              <p>一、请先下后上，有序乘梯</p>
+              <p>二、主动礼让老人、儿童和残障人士</p>
+              <p>三、乘坐电梯时注意脚下安全</p>
+              <p>四、携带物品时注意不要遮挡警报器</p>
+              <p>五、发现电梯异常请立即按警铃求助</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 视频警示卡片 -->
+        <div class="feature-card">
+          <div class="card-image-wrapper">
+            <img src="/card-video.png" alt="视频警示" class="card-image" />
+            <div class="card-overlay">
+              <span class="card-badge video-badge">视频警示</span>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">视频警示</h3>
+            <p class="card-description">观看电梯安全警示教育</p>
+            <router-link to="/video-warning" class="card-button video-btn">
+              查看更多
+              <span class="button-arrow">→</span>
+            </router-link>
+            <div class="card-slogan">
+              <p>一、安全乘梯，预防为主，综合治理</p>
+              <p>二、熟读并使用电梯安全乘梯须知</p>
+              <p>三、一旦发生故障请不要惊慌按警铃</p>
+              <p>四、定期参加电梯安全应急演练活动</p>
+              <p>五、共同维护电梯安全运行环境</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -353,6 +433,237 @@ body.dark-mode .carousel-card:hover {
 @media (max-width: 480px) {
   .carousel-container {
     height: 200px;
+  }
+}
+
+/* ========== 功能卡片区域 ========== */
+.cards-section {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 40px 60px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* 单个功能卡片 */
+.feature-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 255, 0.92) 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(102, 126, 234, 0.12);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 50px rgba(102, 126, 234, 0.2);
+}
+
+/* 深色模式下的卡片 */
+body.dark-mode .feature-card {
+  background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(25, 35, 60, 0.92) 100%);
+  box-shadow: 0 8px 30px rgba(74, 154, 245, 0.12);
+  border: 1px solid rgba(74, 154, 245, 0.15);
+}
+
+body.dark-mode .feature-card:hover {
+  box-shadow: 0 16px 50px rgba(74, 154, 245, 0.2);
+}
+
+/* 图片容器 */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.feature-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+/* 图片遮罩 */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.4));
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+/* 卡片徽章 */
+.card-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.regulations-badge {
+  background: rgba(26, 115, 232, 0.8);
+}
+
+.safety-badge {
+  background: rgba(34, 197, 94, 0.8);
+}
+
+.video-badge {
+  background: rgba(239, 68, 68, 0.8);
+}
+
+/* 卡片内容 */
+.card-content {
+  padding: 24px;
+}
+
+.card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+/* 深色模式下的标题 */
+body.dark-mode .card-title {
+  color: #f0f0f0;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+/* 深色模式下的描述 */
+body.dark-mode .card-description {
+  color: #a0a0a0;
+}
+
+/* 查看更多按钮 */
+.card-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+
+.regulations-btn {
+  background: linear-gradient(135deg, #1a73e8 0%, #4a9af5 100%);
+}
+
+.regulations-btn:hover {
+  background: linear-gradient(135deg, #1557b0 0%, #3584e4 100%);
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+}
+
+.safety-btn {
+  background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+}
+
+.safety-btn:hover {
+  background: linear-gradient(135deg, #16a34a 0%, #16b46a 100%);
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+}
+
+.video-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+}
+
+.video-btn:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #ea5656 100%);
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.button-arrow {
+  transition: transform 0.3s ease;
+}
+
+.card-button:hover .button-arrow {
+  transform: translateX(4px);
+}
+
+/* 标语 */
+.card-slogan {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.card-slogan p {
+  margin: 4px 0;
+  font-style: italic;
+}
+
+/* 深色模式下的标语 */
+body.dark-mode .card-slogan {
+  color: #808080;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .cards-container {
+    gap: 20px;
+  }
+
+  .card-image-wrapper {
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-section {
+    padding: 20px 20px 40px;
+  }
+
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card-image-wrapper {
+    height: 200px;
+  }
+
+  .card-content {
+    padding: 20px;
   }
 }
 </style>
