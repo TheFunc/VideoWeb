@@ -40,7 +40,7 @@ function handleClick() {
   flex-shrink: 0;
   border-radius: 12px;
   overflow: hidden;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.80);
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -48,7 +48,7 @@ function handleClick() {
 
 /* 深色模式下卡片背景 */
 body.dark-mode .video-card {
-  background: var(--bg-card);
+  background: rgba(30, 30, 30, 0.80);
 }
 
 .video-card:hover {

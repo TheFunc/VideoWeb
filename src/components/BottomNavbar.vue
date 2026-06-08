@@ -80,18 +80,16 @@ function handleNavClick(item: MenuItem) {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background: linear-gradient(135deg, #f0f7ff 0%, #e8f2ff 50%, #f0f4ff 100%);
-  border-bottom: 1px solid rgba(26, 115, 232, 0.15);
+  background: rgba(240, 247, 255, 0.3);
+  border-bottom: 1px solid rgba(26, 115, 232, 0.1);
   padding: 8px 0;
-  box-shadow: 0 -2px 8px rgba(26, 115, 232, 0.05);
   transition: all 0.3s ease;
 }
 
 /* 深色模式 */
 body.dark-mode .bottom-navbar {
-  background: linear-gradient(135deg, #1a2535 0%, #1e2d45 50%, #1a2535 100%);
-  border-bottom: 1px solid rgba(74, 154, 245, 0.2);
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+  background: rgba(20, 28, 40, 0.4);
+  border-bottom: 1px solid rgba(74, 154, 245, 0.1);
 }
 
 .nav-item {

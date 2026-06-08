@@ -15,5 +15,6 @@ import BottomNavbar from '@/components/BottomNavbar.vue'
 .home-view {
   min-height: 100vh;
   position: relative;
+  background: transparent;
 }
 </style>

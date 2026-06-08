@@ -219,7 +219,6 @@ watch(groupVideos, (newVideos) => {
 .video-player-view {
   min-height: 100vh;
   position: relative;
-  background: var(--bg-color);
   transition: background-color 0.3s ease;
 }
 

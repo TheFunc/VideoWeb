@@ -138,7 +138,6 @@ onMounted(() => {
 .regulations-view {
   min-height: 100vh;
   position: relative;
-  background: var(--bg-color);
 }
 
 .regulations-content {
@@ -270,7 +269,7 @@ onMounted(() => {
 }
 
 .text-card {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 20px 24px;
@@ -286,7 +285,7 @@ onMounted(() => {
 }
 
 body.dark-mode .text-card {
-  background: var(--bg-card);
+  background: rgba(30, 35, 48, 0.85);
 }
 
 .card-header {

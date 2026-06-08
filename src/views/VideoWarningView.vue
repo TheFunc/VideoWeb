@@ -147,7 +147,6 @@ onMounted(() => {
 .video-warning-view {
   min-height: 100vh;
   position: relative;
-  background: var(--bg-color);
 }
 
 /* 搜索区域 */
@@ -155,8 +154,13 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   padding: 20px 40px;
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.75);
   border-bottom: 1px solid var(--border-color);
+}
+
+/* 深色模式下搜索区域背景 */
+body.dark-mode .search-section {
+  background: rgba(30, 30, 30, 0.75);
 }
 
 .search-box {

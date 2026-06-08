@@ -298,9 +298,13 @@ onUnmounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.85);
   border-bottom: 1px solid var(--border-color);
   gap: 20px;
+}
+
+body.dark-mode .filter-section {
+  background: rgba(30, 35, 48, 0.85);
 }
 
 .filter-left {
@@ -317,13 +321,17 @@ onUnmounted(() => {
   padding: 10px 16px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--text-primary);
   font-size: 14px;
   cursor: pointer;
   outline: none;
   transition: all 0.3s ease;
   min-width: 150px;
+}
+
+body.dark-mode .type-select {
+  background: rgba(40, 45, 58, 0.9);
 }
 
 .type-select:hover {
@@ -351,9 +359,13 @@ onUnmounted(() => {
   border-radius: 8px;
   font-size: 14px;
   color: var(--text-primary);
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.9);
   outline: none;
   transition: all 0.3s ease;
+}
+
+body.dark-mode .search-input {
+  background: rgba(40, 45, 58, 0.9);
 }
 
 .search-input:focus {
@@ -470,12 +482,16 @@ body.dark-mode .search-input:focus {
 }
 
 .image-card {
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+body.dark-mode .image-card {
+  background: rgba(30, 35, 48, 0.85);
 }
 
 .image-card:hover {
@@ -573,7 +589,9 @@ body.dark-mode .search-input:focus {
 }
 
 .detail-content {
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   border-radius: 16px;
   max-width: 900px;
   width: 100%;
@@ -582,6 +600,10 @@ body.dark-mode .search-input:focus {
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: slideUp 0.3s ease;
+}
+
+body.dark-mode .detail-content {
+  background: rgba(30, 35, 48, 0.9);
 }
 
 @keyframes slideUp {

@@ -41,10 +41,10 @@ html, body {
   width: 100%;
   min-height: 100vh;
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
-  background: var(--bg-color);
+  background: url('/global-bg.jpg') center center / cover no-repeat fixed;
   color: var(--text-primary);
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 #app {

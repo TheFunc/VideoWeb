@@ -171,7 +171,6 @@ onMounted(() => {
 .text-detail-view {
   min-height: 100vh;
   position: relative;
-  background: var(--bg-color);
 }
 
 .detail-content {
@@ -195,13 +194,17 @@ onMounted(() => {
   gap: 8px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   color: var(--text-primary);
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+body.dark-mode .back-btn {
+  background: rgba(30, 35, 48, 0.85);
 }
 
 .back-btn:hover {
@@ -293,7 +296,7 @@ onMounted(() => {
 
 /* Markdown文章样式 */
 .markdown-article {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 40px;
@@ -301,7 +304,7 @@ onMounted(() => {
 }
 
 body.dark-mode .markdown-article {
-  background: var(--bg-card);
+  background: rgba(30, 35, 48, 0.85);
 }
 
 .article-meta {
@@ -346,6 +349,9 @@ body.dark-mode .markdown-article {
 .markdown-body {
   line-height: 1.8;
   color: var(--text-primary);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .markdown-body :deep(h1) {
@@ -354,6 +360,7 @@ body.dark-mode .markdown-article {
   margin: 32px 0 16px;
   padding-bottom: 8px;
   border-bottom: 2px solid var(--border-color);
+  letter-spacing: 0.5px;
 }
 
 .markdown-body :deep(h2) {
@@ -361,7 +368,8 @@ body.dark-mode .markdown-article {
   font-weight: 600;
   margin: 28px 0 14px;
   padding-bottom: 6px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
+  letter-spacing: 0.3px;
 }
 
 .markdown-body :deep(h3) {
@@ -378,6 +386,7 @@ body.dark-mode .markdown-article {
 
 .markdown-body :deep(p) {
   margin: 12px 0;
+  line-height: 1.9;
 }
 
 .markdown-body :deep(ul),
@@ -434,7 +443,7 @@ body.dark-mode .markdown-body :deep(pre) {
   width: 100%;
   margin: 16px 0;
   border-collapse: collapse;
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
 }
 
 .markdown-body :deep(th),
@@ -447,6 +456,7 @@ body.dark-mode .markdown-body :deep(pre) {
 .markdown-body :deep(th) {
   background: var(--bg-secondary);
   font-weight: 600;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .markdown-body :deep(img) {
