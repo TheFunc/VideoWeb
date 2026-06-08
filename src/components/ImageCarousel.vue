@@ -1,72 +1,139 @@
 <template>
   <div class="image-carousel">
-    <h2 class="section-title">图文精选</h2>
+    <div class="section-header">
+      <div class="section-badge">
+        <span class="badge-dot"></span>
+        精选内容
+      </div>
+      <h2 class="section-title">图文精选</h2>
+    </div>
+    
     <div class="carousel-container">
+      <!-- 装饰背景 -->
+      <div class="carousel-glow"></div>
+      
       <div 
-        v-if="images.length > 0"
-        class="carousel-wrapper"
+        class="carousel-stage"
         @mouseenter="pauseAutoPlay"
         @mouseleave="resumeAutoPlay"
       >
-        <!-- 图片项 -->
-        <transition-group name="carousel-fade" tag="div" class="carousel-slides">
-          <div 
-            v-for="(image, index) in images" 
-            :key="image.id"
-            v-show="currentIndex === index"
-            class="carousel-slide"
+        <div class="carousel-track">
+          <transition
+            name="carousel-3d"
+            mode="out-in"
           >
-            <img 
-              :src="getFullUrl(image.coverPath)" 
-              :alt="image.groupName || '图文封面'"
-              @error="handleImageError"
-            />
-            <div class="slide-overlay">
-              <div class="slide-info">
-                <h3 class="slide-title">{{ image.groupName }}</h3>
-                <p class="slide-description">{{ image.description }}</p>
+            <div 
+              :key="currentIndex"
+              class="carousel-slide"
+            >
+              <!-- 图片容器 -->
+              <div class="slide-image-wrapper">
+                <img 
+                  :src="getFullUrl(images[currentIndex].coverPath)" 
+                  :alt="images[currentIndex].groupName || '图文封面'"
+                  class="slide-image"
+                  @error="handleImageError"
+                />
+                <!-- 图片光泽扫过效果 -->
+                <div class="slide-shine"></div>
+                <!-- 装饰边框 -->
+                <div class="slide-border"></div>
               </div>
+              
+              <!-- 内容覆盖层 -->
+              <div class="slide-content">
+                <div class="slide-number">{{ String(currentIndex + 1).padStart(2, '0') }}
+                  <span class="number-total">/{{ String(images.length).padStart(2, '0') }}</span>
+                </div>
+                <div class="slide-info">
+                  <h3 class="slide-title">{{ images[currentIndex].groupName }}</h3>
+                  <p class="slide-description">{{ images[currentIndex].description }}</p>
+                  <button class="slide-action-btn">
+                    查看详情
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- 装饰角标 -->
+              <div class="corner-decor top-left"></div>
+              <div class="corner-decor top-right"></div>
+              <div class="corner-decor bottom-left"></div>
+              <div class="corner-decor bottom-right"></div>
             </div>
-          </div>
-        </transition-group>
+          </transition>
+        </div>
+      </div>
 
-        <!-- 指示器 -->
+      <!-- 自定义指示器 -->
+      <div class="carousel-controls">
+        <!-- 进度指示 -->
+        <div class="carousel-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" :style="{ width: progressWidth + '%' }"></div>
+          </div>
+        </div>
+        
+        <!-- 指示器点 -->
         <div class="carousel-indicators">
           <span 
             v-for="(image, index) in images" 
             :key="`indicator-${index}`"
             class="indicator"
-            :class="{ active: currentIndex === index }"
+            :class="{ 
+              active: currentIndex === index,
+              'indicator-hover': hoverIndex === index
+            }"
             @click="goToSlide(index)"
-          ></span>
+            @mouseenter="hoverIndex = index"
+            @mouseleave="hoverIndex = null"
+          >
+            <span class="indicator-label">{{ image.groupName }}</span>
+          </span>
         </div>
-
-        <!-- 左右箭头 -->
-        <button class="carousel-arrow prev" @click="prevSlide" title="上一张">
-          ‹
-        </button>
-        <button class="carousel-arrow next" @click="nextSlide" title="下一张">
-          ›
-        </button>
+        
+        <!-- 导航箭头 -->
+        <div class="carousel-arrows">
+          <button class="nav-arrow prev" @click="prevSlide" title="上一张">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M12 4L8 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="nav-arrow next" @click="nextSlide" title="下一张">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M8 4L12 10L8 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
       </div>
+    </div>
 
-      <!-- 加载状态 -->
-      <div v-else-if="loading" class="carousel-loading">
-        <div class="loading-spinner"></div>
-        <p>加载中...</p>
+    <!-- 加载状态 -->
+    <div v-if="loading" class="carousel-loading">
+      <div class="loading-ring">
+        <div class="ring-segment" v-for="i in 8" :key="i"></div>
       </div>
+      <p>加载中...</p>
+    </div>
 
-      <!-- 空状态 -->
-      <div v-else class="carousel-empty">
-        <div class="empty-icon">🖼️</div>
-        <p>暂无图文内容</p>
+    <!-- 空状态 -->
+    <div v-else-if="!loading && images.length === 0" class="carousel-empty">
+      <div class="empty-illustration">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect x="10" y="15" width="60" height="45" rx="4" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+          <circle cx="30" cy="35" r="6" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+          <path d="M10 55L25 45L40 52L55 40L70 50" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+        </svg>
       </div>
+      <p>暂无图文内容</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { getImageTextList } from '@/api/index'
 
 interface ImageItem {
@@ -79,8 +146,14 @@ interface ImageItem {
 const images = ref<ImageItem[]>([])
 const loading = ref(false)
 const currentIndex = ref(0)
+const hoverIndex = ref<number | null>(null)
 let autoPlayTimer: number | null = null
-const AUTO_PLAY_INTERVAL = 1500 // 1.5秒
+let progressTimer: number | null = null
+const AUTO_PLAY_INTERVAL = 4000 // 4秒
+const progress = ref(0)
+
+// 计算进度宽度
+const progressWidth = computed(() => progress.value)
 
 // 获取完整URL
 function getFullUrl(path: string): string {
@@ -103,16 +176,14 @@ async function loadImages() {
   loading.value = true
   try {
     const list = await getImageTextList()
-    // 只取前3张
     images.value = list.slice(0, 3).map((item: any) => ({
       id: item.id,
       coverPath: item.coverPath,
       groupName: item.groupName,
       description: item.description
     }))
-    console.log('✅ 轮播器图片加载成功:', images.value)
   } catch (error) {
-    console.error('❌ 加载轮播图片失败:', error)
+    console.error('加载图文失败:', error)
     images.value = []
   } finally {
     loading.value = false
@@ -123,21 +194,47 @@ async function loadImages() {
 function goToSlide(index: number) {
   if (index < 0 || index >= images.value.length) return
   currentIndex.value = index
+  resetProgress()
 }
 
 // 下一张
 function nextSlide() {
   currentIndex.value = (currentIndex.value + 1) % images.value.length
+  resetProgress()
 }
 
 // 上一张
 function prevSlide() {
   currentIndex.value = (currentIndex.value - 1 + images.value.length) % images.value.length
+  resetProgress()
+}
+
+// 重置进度
+function resetProgress() {
+  progress.value = 0
+  if (progressTimer) {
+    cancelAnimationFrame(progressTimer)
+  }
+  startProgress()
+}
+
+// 开始进度条
+function startProgress() {
+  const startTime = Date.now()
+  function updateProgress() {
+    const elapsed = Date.now() - startTime
+    progress.value = Math.min((elapsed / AUTO_PLAY_INTERVAL) * 100, 100)
+    if (progress.value < 100) {
+      progressTimer = requestAnimationFrame(updateProgress)
+    }
+  }
+  progressTimer = requestAnimationFrame(updateProgress)
 }
 
 // 开始自动播放
 function startAutoPlay() {
   stopAutoPlay()
+  startProgress()
   autoPlayTimer = window.setInterval(() => {
     nextSlide()
   }, AUTO_PLAY_INTERVAL)
@@ -149,6 +246,11 @@ function stopAutoPlay() {
     clearInterval(autoPlayTimer)
     autoPlayTimer = null
   }
+  if (progressTimer) {
+    cancelAnimationFrame(progressTimer)
+    progressTimer = null
+  }
+  progress.value = 0
 }
 
 // 暂停自动播放(鼠标悬停时)
@@ -158,7 +260,9 @@ function pauseAutoPlay() {
 
 // 恢复自动播放(鼠标离开时)
 function resumeAutoPlay() {
-  startAutoPlay()
+  if (images.value.length > 0) {
+    startAutoPlay()
+  }
 }
 
 onMounted(() => {
@@ -178,178 +282,462 @@ onUnmounted(() => {
 .image-carousel {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px 30px;
+  padding: 0 40px 40px;
+}
+
+/* ========== 区域头部 ========== */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.section-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(26, 115, 232, 0.1) 0%, rgba(74, 154, 245, 0.08) 100%);
+  border: 1px solid rgba(26, 115, 232, 0.2);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
 }
 
 .section-title {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 24px;
-  padding-left: 12px;
-  border-left: 4px solid var(--primary-color);
+  letter-spacing: 0.5px;
 }
 
+/* ========== 轮播容器 ========== */
 .carousel-container {
   position: relative;
 }
 
-.carousel-wrapper {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+/* 背景光晕 */
+.carousel-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(26, 115, 232, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.carousel-slides {
+/* 轮播舞台 */
+.carousel-stage {
   position: relative;
+  width: 100%;
+  height: 480px;
+  perspective: 1200px;
+  z-index: 1;
+}
+
+/* 轮播轨道 */
+.carousel-track {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
+/* ========== 幻灯片 ========== */
 .carousel-slide {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.carousel-slide img {
+/* 图片包装器 */
+.slide-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.slide-overlay {
+.carousel-slide:hover .slide-image {
+  transform: scale(1.03);
+}
+
+/* 光泽扫过效果 */
+.slide-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.8s ease;
+  pointer-events: none;
+}
+
+.carousel-slide:hover .slide-shine {
+  left: 150%;
+}
+
+/* 装饰边框 */
+.slide-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+/* 装饰角标 */
+.corner-decor {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.corner-decor::before,
+.corner-decor::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.corner-decor.top-left {
+  top: 16px;
+  left: 16px;
+}
+.corner-decor.top-left::before { width: 24px; height: 2px; }
+.corner-decor.top-left::after { width: 2px; height: 24px; }
+
+.corner-decor.top-right {
+  top: 16px;
+  right: 16px;
+}
+.corner-decor.top-right::before { width: 24px; height: 2px; right: 0; }
+.corner-decor.top-right::after { width: 2px; height: 24px; right: 0; }
+
+.corner-decor.bottom-left {
+  bottom: 16px;
+  left: 16px;
+}
+.corner-decor.bottom-left::before { bottom: 0; width: 24px; height: 2px; }
+.corner-decor.bottom-left::after { bottom: 0; width: 2px; height: 24px; }
+
+.corner-decor.bottom-right {
+  bottom: 16px;
+  right: 16px;
+}
+.corner-decor.bottom-right::before { bottom: 0; right: 0; width: 24px; height: 2px; }
+.corner-decor.bottom-right::after { bottom: 0; right: 0; width: 2px; height: 24px; }
+
+/* ========== 内容覆盖层 ========== */
+.slide-content {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  padding: 40px 30px 30px;
+  padding: 80px 48px 48px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.slide-number {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  font-size: 48px;
+  font-weight: 800;
+  opacity: 0.25;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.number-total {
+  font-size: 24px;
+  opacity: 0.6;
 }
 
 .slide-info {
-  max-width: 600px;
+  max-width: 550px;
 }
 
 .slide-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0 0 8px 0;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1.3;
 }
 
 .slide-description {
-  font-size: 14px;
-  margin: 0;
+  font-size: 15px;
+  margin: 0 0 24px 0;
   opacity: 0.9;
-  line-height: 1.6;
+  line-height: 1.7;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* 过渡动画 */
-.carousel-fade-enter-active,
-.carousel-fade-leave-active {
-  transition: opacity 0.5s ease;
+/* 动作按钮 */
+.slide-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 30px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.carousel-fade-enter-from,
-.carousel-fade-leave-to {
-  opacity: 0;
+.slide-action-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateX(4px);
+}
+
+.slide-action-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.slide-action-btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* ========== 控制面板 ========== */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 0 8px;
+}
+
+/* 进度条 */
+.carousel-progress {
+  flex: 0 0 auto;
+  width: 120px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(26, 115, 232, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+  border-radius: 2px;
+  transition: width 0.1s linear;
 }
 
 /* 指示器 */
 .carousel-indicators {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  flex: 1;
   display: flex;
-  gap: 10px;
-  z-index: 10;
+  justify-content: center;
+  gap: 12px;
 }
 
 .indicator {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.indicator-label {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: color 0.4s ease;
 }
 
 .indicator:hover {
-  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.15);
 }
 
 .indicator.active {
-  background: white;
-  width: 24px;
-  border-radius: 5px;
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.25);
+  transform: translateY(-2px);
 }
 
-/* 箭头按钮 */
-.carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: rgba(255, 255, 255, 0.3);
+.indicator.active::before {
+  opacity: 1;
+}
+
+.indicator.active .indicator-label {
   color: white;
-  font-size: 24px;
-  cursor: pointer;
-  border-radius: 50%;
+}
+
+/* 导航箭头 */
+.carousel-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 10;
 }
 
-.carousel-arrow:hover {
-  background: rgba(255, 255, 255, 0.5);
-  transform: translateY(-50%) scale(1.1);
+.nav-arrow:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
 }
 
-.carousel-arrow.prev {
-  left: 20px;
+.nav-arrow:active {
+  transform: scale(0.98);
 }
 
-.carousel-arrow.next {
-  right: 20px;
+/* ========== 过渡动画 ========== */
+.carousel-3d-enter-active {
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 加载状态 */
+.carousel-3d-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-3d-enter-from {
+  opacity: 0;
+  transform: scale(0.92) translateY(20px);
+  filter: blur(4px);
+}
+
+.carousel-3d-leave-to {
+  opacity: 0;
+  transform: scale(1.05) translateY(-15px);
+  filter: blur(2px);
+}
+
+/* ========== 加载状态 ========== */
 .carousel-loading {
-  height: 400px;
+  height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--bg-secondary);
-  border-radius: 12px;
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  gap: 20px;
 }
 
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--border-color);
+.loading-ring {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.ring-segment {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
   border-top-color: var(--primary-color);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
+  animation: spin-ring 1.2s linear infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.ring-segment:nth-child(even) {
+  border-top-color: var(--primary-light);
+  animation-delay: -0.3s;
+}
+
+@keyframes spin-ring {
+  to { transform: rotate(360deg); }
 }
 
 .carousel-loading p {
@@ -357,21 +745,21 @@ onUnmounted(() => {
   font-size: 14px;
 }
 
-/* 空状态 */
+/* ========== 空状态 ========== */
 .carousel-empty {
-  height: 400px;
+  height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--bg-secondary);
-  border-radius: 12px;
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  gap: 16px;
 }
 
-.empty-icon {
-  font-size: 64px;
-  margin-bottom: 16px;
-  opacity: 0.5;
+.empty-illustration {
+  opacity: 0.4;
 }
 
 .carousel-empty p {
@@ -379,14 +767,101 @@ onUnmounted(() => {
   font-size: 16px;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
+/* ========== 深色模式 ========== */
+body.dark-mode .section-badge {
+  background: linear-gradient(135deg, rgba(74, 154, 245, 0.15) 0%, rgba(107, 179, 247, 0.1) 100%);
+  border-color: rgba(74, 154, 245, 0.25);
+  color: var(--primary-color);
+}
+
+body.dark-mode .slide-number {
+  opacity: 0.15;
+}
+
+/* ========== 响应式设计 ========== */
+@media (max-width: 1024px) {
   .image-carousel {
-    padding: 0 20px 20px;
+    padding: 0 30px 30px;
   }
   
-  .carousel-wrapper {
-    height: 300px;
+  .carousel-stage {
+    height: 400px;
+  }
+  
+  .slide-title {
+    font-size: 26px;
+  }
+  
+  .slide-description {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-carousel {
+    padding: 0 20px 24px;
+  }
+  
+  .section-title {
+    font-size: 22px;
+  }
+  
+  .carousel-stage {
+    height: 320px;
+  }
+  
+  .slide-content {
+    padding: 50px 24px 28px;
+  }
+  
+  .slide-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  
+  .slide-description {
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .slide-number {
+    font-size: 36px;
+  }
+  
+  .carousel-controls {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .carousel-progress {
+    width: 80px;
+  }
+  
+  .indicator {
+    padding: 6px 14px;
+  }
+  
+  .indicator-label {
+    font-size: 12px;
+  }
+  
+  .nav-arrow {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-stage {
+    height: 240px;
+  }
+  
+  .slide-content {
+    padding: 30px 16px 20px;
   }
   
   .slide-title {
@@ -394,38 +869,29 @@ onUnmounted(() => {
   }
   
   .slide-description {
-    font-size: 12px;
+    display: none;
   }
   
-  .carousel-arrow {
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
+  .slide-action-btn {
+    padding: 10px 20px;
+    font-size: 13px;
   }
   
-  .carousel-arrow.prev {
-    left: 10px;
+  .slide-number {
+    font-size: 28px;
   }
   
-  .carousel-arrow.next {
-    right: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .carousel-wrapper {
-    height: 250px;
-  }
-  
-  .slide-overlay {
-    padding: 20px 15px 15px;
-  }
-  
-  .slide-title {
+  .number-total {
     font-size: 16px;
   }
   
-  .slide-description {
+  .corner-decor {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .corner-decor::before,
+  .corner-decor::after {
     display: none;
   }
 }

@@ -1,15 +1,15 @@
-/* 全局样式 - 蓝色主题（浅色） */
+/* 全局样式 - 电梯安全科普平台主题 */
 :root {
   --primary-color: #1a73e8;
   --primary-light: #4a9af5;
   --primary-dark: #0d47a1;
   --primary-bg: #e8f0fe;
-  --bg-color: #ffffff;
-  --bg-secondary: #f5f7fa;
+  --bg-color: #f8fafc;
+  --bg-secondary: #f0f4f8;
   --bg-card: #ffffff;
   --text-primary: #1a1a2e;
   --text-secondary: #6b7a99;
-  --border-color: #e8ecf1;
+  --border-color: #e2e8f0;
   --shadow-color: rgba(0, 0, 0, 0.06);
   --header-height: 130px;
   --menu-height: 60px;
@@ -22,9 +22,9 @@ body.dark-mode {
   --primary-light: #6bb3f7;
   --primary-dark: #1a73e8;
   --primary-bg: #1e3a5f;
-  --bg-color: #0f1419;
-  --bg-secondary: #1a1f2e;
-  --bg-card: #1e2330;
+  --bg-color: #0a0f1a;
+  --bg-secondary: #111827;
+  --bg-card: #1e293b;
   --text-primary: #e8ecf1;
   --text-secondary: #9aa5b4;
   --border-color: #2a3142;
@@ -41,10 +41,91 @@ html, body {
   width: 100%;
   min-height: 100vh;
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
-  background: url('/global-bg.jpg') center center / cover no-repeat fixed;
   color: var(--text-primary);
   overflow-x: hidden;
   transition: color 0.3s ease;
+  position: relative;
+}
+
+/* ========== 浅色模式背景设计 ========== */
+body:not(.dark-mode)::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: 
+    /* 顶部光晕 */
+    radial-gradient(ellipse 800px 600px at 20% 10%, rgba(26, 115, 232, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 80% 20%, rgba(74, 154, 245, 0.06) 0%, transparent 70%),
+    /* 底部光晕 */
+    radial-gradient(ellipse 800px 500px at 70% 80%, rgba(13, 71, 161, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 400px at 20% 70%, rgba(26, 115, 232, 0.04) 0%, transparent 70%),
+    /* 中间装饰光点 */
+    radial-gradient(circle 3px at 30% 40%, rgba(26, 115, 232, 0.12) 0%, transparent 100%),
+    radial-gradient(circle 2px at 70% 60%, rgba(74, 154, 245, 0.1) 0%, transparent 100%),
+    radial-gradient(circle 4px at 50% 30%, rgba(26, 115, 232, 0.08) 0%, transparent 100%),
+    /* 基础渐变 */
+    linear-gradient(180deg, #f8fafc 0%, #f0f4f8 50%, #f8fafc 100%);
+  pointer-events: none;
+}
+
+/* 网格装饰层 */
+body:not(.dark-mode)::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-image: 
+    linear-gradient(rgba(26, 115, 232, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 115, 232, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+}
+
+/* ========== 深色模式背景设计 ========== */
+body.dark-mode::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: 
+    /* 顶部光晕 */
+    radial-gradient(ellipse 800px 600px at 25% 15%, rgba(74, 154, 245, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 600px 500px at 75% 25%, rgba(107, 179, 247, 0.08) 0%, transparent 65%),
+    /* 底部光晕 */
+    radial-gradient(ellipse 700px 400px at 65% 75%, rgba(26, 115, 232, 0.08) 0%, transparent 70%),
+    /* 基础渐变 */
+    linear-gradient(180deg, #0a0f1a 0%, #111827 50%, #0a0f1a 100%);
+  pointer-events: none;
+}
+
+/* 深色模式网格装饰层 */
+body.dark-mode::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-image: 
+    linear-gradient(rgba(74, 154, 245, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 154, 245, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
 }
 
 #app {

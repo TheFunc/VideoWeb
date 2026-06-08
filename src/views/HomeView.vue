@@ -14,16 +14,39 @@
 
     <!-- 轮播器区域 - 在标题下方 -->
     <div class="carousel-section">
-      <!-- 卡片容器 -->
       <div class="carousel-card">
         <div class="carousel-container" @mouseenter="pauseAutoPlay" @mouseleave="resumeAutoPlay">
-          <img
-            :key="currentIndex"
-            :src="images[currentIndex]"
-            class="carousel-slide"
-            alt="轮播图片"
-            @error="handleImageError"
-          />
+          <div class="slide-wrapper">
+            <img
+              :key="currentIndex"
+              :src="images[currentIndex]"
+              class="carousel-slide"
+              alt="轮播图片"
+              @error="handleImageError"
+            />
+            <div class="slide-shine"></div>
+          </div>
+
+          <!-- 安全术语 -->
+          <div class="term-overlay">
+            <div class="term-badge">
+              <span class="badge-icon"></span>
+              安全提示
+            </div>
+            <p class="term-text">{{ safetyTerms[currentIndex] }}</p>
+          </div>
+
+          <!-- 左右箭头 -->
+          <button class="carousel-arrow prev" @click="prevSlide" title="上一张">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="carousel-arrow next" @click="nextSlide" title="下一张">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
 
           <!-- 指示器 -->
           <div class="carousel-indicators">
@@ -33,16 +56,9 @@
               class="indicator"
               :class="{ active: currentIndex === index }"
               @click="goToSlide(index)"
-            ></span>
-          </div>
-
-          <!-- 左右箭头 -->
-          <button class="carousel-arrow prev" @click="prevSlide" title="上一张">‹</button>
-          <button class="carousel-arrow next" @click="nextSlide" title="下一张">›</button>
-
-          <!-- 安全术语 -->
-          <div class="term-overlay">
-            <p class="term-text">{{ safetyTerms[currentIndex] }}</p>
+            >
+              <span class="indicator-dot"></span>
+            </span>
           </div>
         </div>
       </div>
@@ -135,14 +151,12 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import LogoHeader from '@/components/LogoHeader.vue'
 import BottomNavbar from '@/components/BottomNavbar.vue'
 
-// 三张轮播图片 - 使用 public 目录的相对路径
 const images = [
   '/carousel-1.jpg',
   '/carousel-2.jpg',
   '/carousel-3.jpg'
 ]
 
-// 电梯安全术语
 const safetyTerms = [
   '请先下后上，有序乘梯，避免拥堵',
   '电梯超载时，请最后进入的乘客主动退出，确保运行安全',
@@ -151,32 +165,26 @@ const safetyTerms = [
 
 const currentIndex = ref(0)
 let autoPlayTimer: number | null = null
-const AUTO_PLAY_INTERVAL = 3000 // 3秒
+const AUTO_PLAY_INTERVAL = 3000
 
-// 处理图片加载错误
 function handleImageError(event: Event) {
   const img = event.target as HTMLImageElement
-  // 如果图片加载失败，使用占位图
   img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQwMCIgaGVpZ2h0PSI1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7nl6DmkrDmu5Y8L3RleHQ+PC9zdmc+'
 }
 
-// 切换到指定幻灯片
 function goToSlide(index: number) {
   if (index < 0 || index >= images.length) return
   currentIndex.value = index
 }
 
-// 下一张
 function nextSlide() {
   currentIndex.value = (currentIndex.value + 1) % images.length
 }
 
-// 上一张
 function prevSlide() {
   currentIndex.value = (currentIndex.value - 1 + images.length) % images.length
 }
 
-// 开始自动播放
 function startAutoPlay() {
   stopAutoPlay()
   autoPlayTimer = window.setInterval(() => {
@@ -184,7 +192,6 @@ function startAutoPlay() {
   }, AUTO_PLAY_INTERVAL)
 }
 
-// 停止自动播放
 function stopAutoPlay() {
   if (autoPlayTimer !== null) {
     clearInterval(autoPlayTimer)
@@ -192,12 +199,10 @@ function stopAutoPlay() {
   }
 }
 
-// 暂停自动播放(鼠标悬停时)
 function pauseAutoPlay() {
   stopAutoPlay()
 }
 
-// 恢复自动播放(鼠标离开时)
 function resumeAutoPlay() {
   startAutoPlay()
 }
@@ -224,7 +229,7 @@ onUnmounted(() => {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 20px 40px 40px;
+  padding: 20px 40px 30px;
 }
 
 /* 平台标题 */
@@ -234,7 +239,6 @@ onUnmounted(() => {
   margin: 0;
 }
 
-/* 标题透明卡片 */
 .title-card {
   display: inline-block;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(232, 240, 254, 0.5) 100%);
@@ -262,7 +266,6 @@ onUnmounted(() => {
   filter: drop-shadow(0 2px 4px rgba(26, 115, 232, 0.2));
 }
 
-/* 深色模式下的标题卡片 */
 body.dark-mode .title-card {
   background: linear-gradient(135deg, rgba(40, 50, 65, 0.85) 0%, rgba(35, 45, 60, 0.80) 100%);
   border: 1px solid rgba(74, 154, 245, 0.2);
@@ -272,7 +275,6 @@ body.dark-mode .title-card:hover {
   background: linear-gradient(135deg, rgba(45, 55, 70, 0.90) 0%, rgba(40, 50, 65, 0.85) 100%);
 }
 
-/* 深色模式下的标题 */
 body.dark-mode .platform-title h1 {
   background: linear-gradient(135deg, #4a9af5 0%, #6bb3f7 50%, #4a9af5 100%);
   -webkit-background-clip: text;
@@ -296,7 +298,6 @@ body.dark-mode .platform-title h1 {
   transform: translateY(-2px);
 }
 
-/* 深色模式下的卡片 */
 body.dark-mode .carousel-card {
   background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(25, 35, 60, 0.92) 100%);
   box-shadow: 0 8px 40px rgba(74, 154, 245, 0.15), 0 2px 10px rgba(74, 154, 245, 0.08);
@@ -307,13 +308,20 @@ body.dark-mode .carousel-card:hover {
   box-shadow: 0 12px 50px rgba(74, 154, 245, 0.22), 0 4px 15px rgba(74, 154, 245, 0.12);
 }
 
+/* 轮播容器 */
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 400px;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: none;
+}
+
+/* 图片包装器 */
+.slide-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .carousel-slide {
@@ -321,36 +329,133 @@ body.dark-mode .carousel-card:hover {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-container:hover .carousel-slide {
+  transform: scale(1.02);
+}
+
+/* 光泽扫过效果 */
+.slide-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 1s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.carousel-container:hover .slide-shine {
+  left: 150%;
+}
+
+/* 安全术语 */
+.term-overlay {
+  position: absolute;
+  bottom: 18px;
+  left: 22px;
+  z-index: 3;
+}
+
+.term-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  background: rgba(239, 68, 68, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.badge-icon {
+  width: 6px;
+  height: 6px;
+  background: #fca5a5;
+  border-radius: 50%;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.term-text {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin: 0;
+  text-align: left;
+  white-space: nowrap;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  line-height: 1.4;
 }
 
 /* 指示器 */
 .carousel-indicators {
   position: absolute;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 24px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   z-index: 10;
 }
 
 .indicator {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  display: block;
+  width: 34px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.indicator-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  border-radius: 2px;
 }
 
 .indicator:hover {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.55);
+  transform: translateY(-1px);
 }
 
 .indicator.active {
-  background: white;
-  width: 24px;
-  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.9);
+  height: 4px;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+.indicator.active .indicator-dot {
+  transform: scaleX(1);
 }
 
 /* 箭头按钮 */
@@ -358,51 +463,37 @@ body.dark-mode .carousel-card:hover {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border: none;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
   color: white;
-  font-size: 28px;
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
 }
 
 .carousel-arrow:hover {
-  background: rgba(0, 0, 0, 0.7);
-  transform: translateY(-50%) scale(1.1);
+  background: rgba(26, 115, 232, 0.7);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.35);
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.96);
 }
 
 .carousel-arrow.prev {
-  left: 20px;
+  left: 14px;
 }
 
 .carousel-arrow.next {
-  right: 20px;
-}
-
-/* 安全术语 */
-.term-overlay {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  z-index: 10;
-}
-
-.term-text {
-  color: #fff;
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  margin: 0;
-  text-align: left;
-  white-space: nowrap;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  right: 14px;
 }
 
 /* 响应式设计 */
@@ -416,9 +507,8 @@ body.dark-mode .carousel-card:hover {
   }
 
   .carousel-arrow {
-    width: 36px;
-    height: 36px;
-    font-size: 22px;
+    width: 38px;
+    height: 38px;
   }
 
   .carousel-arrow.prev {
@@ -428,11 +518,53 @@ body.dark-mode .carousel-card:hover {
   .carousel-arrow.next {
     right: 10px;
   }
+
+  .term-overlay {
+    left: 16px;
+    bottom: 16px;
+  }
+
+  .term-text {
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .carousel-indicators {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .indicator {
+    width: 28px;
+    height: 3px;
+  }
 }
 
 @media (max-width: 480px) {
   .carousel-container {
-    height: 200px;
+    height: 220px;
+  }
+
+  .term-overlay {
+    display: none;
+  }
+
+  .carousel-indicators {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .carousel-arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .carousel-arrow.prev {
+    left: 8px;
+  }
+
+  .carousel-arrow.next {
+    right: 8px;
   }
 }
 
@@ -450,7 +582,6 @@ body.dark-mode .carousel-card:hover {
   gap: 30px;
 }
 
-/* 单个功能卡片 */
 .feature-card {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 255, 0.92) 100%);
   border-radius: 16px;
@@ -465,7 +596,6 @@ body.dark-mode .carousel-card:hover {
   box-shadow: 0 16px 50px rgba(102, 126, 234, 0.2);
 }
 
-/* 深色模式下的卡片 */
 body.dark-mode .feature-card {
   background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(25, 35, 60, 0.92) 100%);
   box-shadow: 0 8px 30px rgba(74, 154, 245, 0.12);
@@ -476,7 +606,6 @@ body.dark-mode .feature-card:hover {
   box-shadow: 0 16px 50px rgba(74, 154, 245, 0.2);
 }
 
-/* 图片容器 */
 .card-image-wrapper {
   position: relative;
   width: 100%;
@@ -495,7 +624,6 @@ body.dark-mode .feature-card:hover {
   transform: scale(1.05);
 }
 
-/* 图片遮罩 */
 .card-overlay {
   position: absolute;
   top: 0;
@@ -509,7 +637,6 @@ body.dark-mode .feature-card:hover {
   padding: 15px;
 }
 
-/* 卡片徽章 */
 .card-badge {
   padding: 6px 16px;
   border-radius: 20px;
@@ -531,7 +658,6 @@ body.dark-mode .feature-card:hover {
   background: rgba(239, 68, 68, 0.8);
 }
 
-/* 卡片内容 */
 .card-content {
   padding: 24px;
 }
@@ -544,7 +670,6 @@ body.dark-mode .feature-card:hover {
   text-align: center;
 }
 
-/* 深色模式下的标题 */
 body.dark-mode .card-title {
   color: #f0f0f0;
 }
@@ -556,12 +681,10 @@ body.dark-mode .card-title {
   text-align: center;
 }
 
-/* 深色模式下的描述 */
 body.dark-mode .card-description {
   color: #a0a0a0;
 }
 
-/* 查看更多按钮 */
 .card-button {
   display: flex;
   align-items: center;
@@ -618,7 +741,6 @@ body.dark-mode .card-description {
   transform: translateX(4px);
 }
 
-/* 标语 */
 .card-slogan {
   font-size: 12px;
   color: #888;
@@ -632,12 +754,10 @@ body.dark-mode .card-description {
   font-style: italic;
 }
 
-/* 深色模式下的标语 */
 body.dark-mode .card-slogan {
   color: #808080;
 }
 
-/* 响应式设计 */
 @media (max-width: 1024px) {
   .cards-container {
     gap: 20px;
