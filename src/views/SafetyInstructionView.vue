@@ -157,17 +157,19 @@ body.dark-mode .page-title {
 }
 
 .instruction-card {
-  background: white;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 254, 255, 0.95) 100%);
   border-radius: 12px;
   padding: 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(26, 115, 232, 0.08);
+  border: 1px solid rgba(26, 115, 232, 0.12);
   transition: all 0.3s ease;
 }
 
 /* 深色模式下的内容卡片 */
 body.dark-mode .instruction-card {
-  background: var(--bg-card);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, rgba(25, 35, 50, 0.98) 0%, rgba(20, 45, 65, 0.95) 100%);
+  box-shadow: 0 4px 20px rgba(74, 154, 245, 0.12);
+  border: 1px solid rgba(74, 154, 245, 0.15);
 }
 
 .section-title {
@@ -199,8 +201,8 @@ body.dark-mode .section-title {
 .instruction-list li {
   padding: 10px 15px;
   margin-bottom: 8px;
-  background: #f8f9fa;
-  border-left: 3px solid var(--primary-color);
+  background: linear-gradient(135deg, rgba(232, 240, 254, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%);
+  border-left: 3px solid rgba(26, 115, 232, 0.6);
   border-radius: 4px;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -209,21 +211,18 @@ body.dark-mode .section-title {
 
 /* 深色模式下的列表项 */
 body.dark-mode .instruction-list li {
-  background: var(--bg-secondary);
-}
-
-body.dark-mode .instruction-list li {
-  color: #cbd5e1;
-  border-left-color: #60a5fa;
+  background: linear-gradient(135deg, rgba(26, 58, 95, 0.4) 0%, rgba(30, 40, 55, 0.3) 100%);
+  border-left-color: rgba(74, 154, 245, 0.6);
+  color: #94a3b8;
 }
 
 .instruction-list li:hover {
-  background: #e8f0fe;
+  background: linear-gradient(135deg, rgba(232, 240, 254, 0.9) 0%, rgba(224, 231, 255, 0.7) 100%);
   transform: translateX(5px);
 }
 
 body.dark-mode .instruction-list li:hover {
-  background: #475569;
+  background: linear-gradient(135deg, rgba(26, 58, 95, 0.6) 0%, rgba(30, 40, 55, 0.5) 100%);
 }
 
 .emergency-contact {

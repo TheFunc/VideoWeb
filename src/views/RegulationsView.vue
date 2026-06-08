@@ -269,23 +269,24 @@ onMounted(() => {
 }
 
 .text-card {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 246, 255, 0.90) 100%);
+  border: 1px solid rgba(155, 139, 230, 0.2);
   border-radius: 12px;
   padding: 20px 24px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
 }
 
 .text-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  border-color: var(--primary-color);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.4);
 }
 
 body.dark-mode .text-card {
-  background: rgba(30, 35, 48, 0.85);
+  background: linear-gradient(135deg, rgba(35, 30, 50, 0.95) 0%, rgba(40, 35, 60, 0.90) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.2);
 }
 
 .card-header {

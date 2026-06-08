@@ -40,15 +40,16 @@ function handleClick() {
   flex-shrink: 0;
   border-radius: 12px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.80);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(232, 240, 254, 0.90) 100%);
+  border: 1px solid rgba(26, 115, 232, 0.15);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 /* 深色模式下卡片背景 */
 body.dark-mode .video-card {
-  background: rgba(30, 30, 30, 0.80);
+  background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(26, 58, 95, 0.90) 100%);
+  border: 1px solid rgba(74, 154, 245, 0.2);
 }
 
 .video-card:hover {

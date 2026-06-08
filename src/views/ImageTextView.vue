@@ -482,8 +482,8 @@ body.dark-mode .search-input:focus {
 }
 
 .image-card {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 254, 255, 0.90) 100%);
+  border: 1px solid rgba(74, 154, 245, 0.15);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -491,7 +491,8 @@ body.dark-mode .search-input:focus {
 }
 
 body.dark-mode .image-card {
-  background: rgba(30, 35, 48, 0.85);
+  background: linear-gradient(135deg, rgba(25, 35, 50, 0.95) 0%, rgba(20, 45, 65, 0.90) 100%);
+  border: 1px solid rgba(74, 154, 245, 0.2);
 }
 
 .image-card:hover {

@@ -160,8 +160,6 @@ onMounted(async () => {
 }
 
 .stat-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 24px;
   display: flex;
@@ -169,16 +167,81 @@ onMounted(async () => {
   gap: 16px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+/* 视频统计卡片 - 蓝色渐变 */
+.video-stat {
+  background: linear-gradient(135deg, rgba(26, 115, 232, 0.08) 0%, rgba(74, 154, 245, 0.04) 100%);
+  border-color: rgba(26, 115, 232, 0.2);
+}
+
+/* 分类统计卡片 - 紫色渐变 */
+.category-stat {
+  background: linear-gradient(135deg, rgba(155, 89, 182, 0.08) 0%, rgba(167, 139, 250, 0.04) 100%);
+  border-color: rgba(155, 89, 182, 0.2);
+}
+
+/* 图文统计卡片 - 绿色渐变 */
+.image-stat {
+  background: linear-gradient(135deg, rgba(39, 174, 96, 0.08) 0%, rgba(72, 202, 122, 0.04) 100%);
+  border-color: rgba(39, 174, 96, 0.2);
+}
+
+/* 类型统计卡片 - 橙色渐变 */
+.type-stat {
+  background: linear-gradient(135deg, rgba(243, 156, 18, 0.08) 0%, rgba(241, 196, 15, 0.04) 100%);
+  border-color: rgba(243, 156, 18, 0.2);
+}
+
+/* 法规统计卡片 - 红色渐变 */
+.regulation-stat {
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.08) 0%, rgba(255, 107, 107, 0.04) 100%);
+  border-color: rgba(231, 76, 60, 0.2);
+}
+
+/* 法规分类统计卡片 - 青色渐变 */
+.regulation-type-stat {
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.08) 0%, rgba(41, 182, 246, 0.04) 100%);
+  border-color: rgba(0, 188, 212, 0.2);
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  border-color: var(--primary-color);
 }
 
-body.dark-mode .stat-card {
-  background: var(--bg-card);
+.video-stat:hover { border-color: rgba(26, 115, 232, 0.4); box-shadow: 0 8px 24px rgba(26, 115, 232, 0.15); }
+.category-stat:hover { border-color: rgba(155, 89, 182, 0.4); box-shadow: 0 8px 24px rgba(155, 89, 182, 0.15); }
+.image-stat:hover { border-color: rgba(39, 174, 96, 0.4); box-shadow: 0 8px 24px rgba(39, 174, 96, 0.15); }
+.type-stat:hover { border-color: rgba(243, 156, 18, 0.4); box-shadow: 0 8px 24px rgba(243, 156, 18, 0.15); }
+.regulation-stat:hover { border-color: rgba(231, 76, 60, 0.4); box-shadow: 0 8px 24px rgba(231, 76, 60, 0.15); }
+.regulation-type-stat:hover { border-color: rgba(0, 188, 212, 0.4); box-shadow: 0 8px 24px rgba(0, 188, 212, 0.15); }
+
+/* 深色模式 */
+body.dark-mode .video-stat {
+  background: linear-gradient(135deg, rgba(26, 115, 232, 0.2) 0%, rgba(74, 154, 245, 0.1) 100%);
+  border-color: rgba(74, 154, 245, 0.3);
+}
+body.dark-mode .category-stat {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(192, 132, 252, 0.1) 100%);
+  border-color: rgba(167, 139, 250, 0.3);
+}
+body.dark-mode .image-stat {
+  background: linear-gradient(135deg, rgba(72, 202, 122, 0.2) 0%, rgba(110, 232, 160, 0.1) 100%);
+  border-color: rgba(72, 202, 122, 0.3);
+}
+body.dark-mode .type-stat {
+  background: linear-gradient(135deg, rgba(241, 196, 15, 0.2) 0%, rgba(250, 219, 116, 0.1) 100%);
+  border-color: rgba(241, 196, 15, 0.3);
+}
+body.dark-mode .regulation-stat {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 138, 128, 0.1) 100%);
+  border-color: rgba(255, 107, 107, 0.3);
+}
+body.dark-mode .regulation-type-stat {
+  background: linear-gradient(135deg, rgba(41, 182, 246, 0.2) 0%, rgba(100, 215, 255, 0.1) 100%);
+  border-color: rgba(41, 182, 246, 0.3);
 }
 
 .stat-icon-wrapper {

@@ -7,7 +7,9 @@
 
     <!-- 标题：电梯安全科普平台 -->
     <div class="platform-title">
-      <h1>电梯安全科普平台</h1>
+      <div class="title-card">
+        <h1>电梯安全科普平台</h1>
+      </div>
     </div>
 
     <!-- 轮播器区域 - 在标题下方 -->
@@ -150,39 +152,79 @@ onUnmounted(() => {
   text-align: center;
   padding: 24px 40px;
   margin: 0;
-  background: transparent;
+}
+
+/* 标题透明卡片 */
+.title-card {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(232, 240, 254, 0.5) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(26, 115, 232, 0.2);
+  padding: 18px 56px;
+  transition: all 0.3s ease;
+}
+
+.title-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(232, 240, 254, 0.6) 100%);
+  transform: translateY(-2px);
 }
 
 .platform-title h1 {
-  color: #667eea;
-  font-size: 32px;
-  font-weight: 700;
+  background: linear-gradient(135deg, #1a73e8 0%, #4a9af5 50%, #1a73e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 38px;
+  font-weight: 800;
   margin: 0;
-  letter-spacing: 4px;
+  letter-spacing: 6px;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 4px rgba(26, 115, 232, 0.2));
+}
+
+/* 深色模式下的标题卡片 */
+body.dark-mode .title-card {
+  background: linear-gradient(135deg, rgba(40, 50, 65, 0.85) 0%, rgba(35, 45, 60, 0.80) 100%);
+  border: 1px solid rgba(74, 154, 245, 0.2);
+}
+
+body.dark-mode .title-card:hover {
+  background: linear-gradient(135deg, rgba(45, 55, 70, 0.90) 0%, rgba(40, 50, 65, 0.85) 100%);
 }
 
 /* 深色模式下的标题 */
 body.dark-mode .platform-title h1 {
-  color: #a78bfa;
+  background: linear-gradient(135deg, #4a9af5 0%, #6bb3f7 50%, #4a9af5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 4px rgba(74, 154, 245, 0.3));
 }
 
 /* 卡片容器 */
 .carousel-card {
-  background: white;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 255, 0.92) 100%);
   border-radius: 16px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 40px rgba(102, 126, 234, 0.1), 0 2px 10px rgba(102, 126, 234, 0.05);
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(102, 126, 234, 0.12);
 }
 
 .carousel-card:hover {
-  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 50px rgba(102, 126, 234, 0.18), 0 4px 15px rgba(102, 126, 234, 0.08);
+  transform: translateY(-2px);
 }
 
 /* 深色模式下的卡片 */
 body.dark-mode .carousel-card {
-  background: rgba(30, 40, 55, 0.95);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(25, 35, 60, 0.92) 100%);
+  box-shadow: 0 8px 40px rgba(74, 154, 245, 0.15), 0 2px 10px rgba(74, 154, 245, 0.08);
+  border: 1px solid rgba(74, 154, 245, 0.15);
+}
+
+body.dark-mode .carousel-card:hover {
+  box-shadow: 0 12px 50px rgba(74, 154, 245, 0.22), 0 4px 15px rgba(74, 154, 245, 0.12);
 }
 
 .carousel-container {
