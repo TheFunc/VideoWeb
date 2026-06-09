@@ -1,34 +1,155 @@
 /* 全局样式 - 电梯安全科普平台主题 */
+/* 专业教育风格 + 现代科技感 */
+
 :root {
-  --primary-color: #1a73e8;
-  --primary-light: #4a9af5;
-  --primary-dark: #0d47a1;
-  --primary-bg: #e8f0fe;
-  --bg-color: #f8fafc;
-  --bg-secondary: #f0f4f8;
+  /* ========== 核心色彩系统 ========== */
+  --primary-color: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-300: #93c5fd;
+  --primary-400: #60a5fa;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --primary-800: #1e40af;
+  --primary-900: #1e3a8a;
+
+  /* ========== 辅助色彩系统 ========== */
+  --success-color: #059669;
+  --success-light: #10b981;
+  --success-50: #ecfdf5;
+  --success-100: #d1fae5;
+  
+  --warning-color: #d97706;
+  --warning-light: #f59e0b;
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  
+  --danger-color: #dc2626;
+  --danger-light: #ef4444;
+  --danger-50: #fef2f2;
+  --danger-100: #fee2e2;
+  
+  --info-color: #0891b2;
+  --info-light: #06b6d4;
+
+  /* ========== 背景系统 ========== */
+  --bg-color: #fafbfc;
+  --bg-secondary: #f1f5f9;
   --bg-card: #ffffff;
-  --text-primary: #1a1a2e;
-  --text-secondary: #6b7a99;
+  --bg-overlay: rgba(255, 255, 255, 0.85);
+
+  /* ========== 文字系统 ========== */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* ========== 边框系统 ========== */
   --border-color: #e2e8f0;
-  --shadow-color: rgba(0, 0, 0, 0.06);
-  --header-height: 130px;
-  --menu-height: 60px;
-  --navbar-height: 60px;
+  --border-light: #f1f5f9;
+  --border-dark: #cbd5e1;
+
+  /* ========== 阴影系统 ========== */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+  --shadow-primary: 0 4px 14px rgba(37, 99, 235, 0.15);
+  --shadow-primary-lg: 0 8px 30px rgba(37, 99, 235, 0.25);
+
+  /* ========== 圆角系统 ========== */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ========== 间距系统 ========== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* ========== 布局变量 ========== */
+  --header-height: 72px;
+  --navbar-height: 64px;
+  --content-max-width: 1280px;
+  --content-padding: 24px;
+
+  /* ========== 过渡动画 ========== */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ========== 字体系统 ========== */
+  --font-display: 'SF Pro Display', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body: 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace;
 }
 
-/* 深色模式主题 */
+/* ========== 深色模式主题 ========== */
 body.dark-mode {
-  --primary-color: #4a9af5;
-  --primary-light: #6bb3f7;
-  --primary-dark: #1a73e8;
-  --primary-bg: #1e3a5f;
-  --bg-color: #0a0f1a;
+  --primary-color: #60a5fa;
+  --primary-light: #93c5fd;
+  --primary-dark: #3b82f6;
+  --primary-50: #1e3a8a;
+  --primary-100: #1e40af;
+  --primary-200: #1d4ed8;
+  --primary-300: #2563eb;
+  --primary-400: #3b82f6;
+  --primary-500: #60a5fa;
+  --primary-600: #93c5fd;
+  --primary-700: #bfdbfe;
+  --primary-800: #dbeafe;
+  --primary-900: #eff6ff;
+
+  --success-color: #34d399;
+  --success-light: #6ee7b7;
+  --success-50: #064e3b;
+  --success-100: #065f46;
+  
+  --warning-color: #fbbf24;
+  --warning-light: #fcd34d;
+  --warning-50: #78350f;
+  --warning-100: #92400e;
+  
+  --danger-color: #f87171;
+  --danger-light: #fca5a5;
+  --danger-50: #7f1d1d;
+  --danger-100: #991b1b;
+
+  --bg-color: #0b0f19;
   --bg-secondary: #111827;
-  --bg-card: #1e293b;
-  --text-primary: #e8ecf1;
-  --text-secondary: #9aa5b4;
-  --border-color: #2a3142;
-  --shadow-color: rgba(0, 0, 0, 0.3);
+  --bg-card: #1a2035;
+  --bg-overlay: rgba(26, 32, 53, 0.85);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-inverse: #0f172a;
+
+  --border-color: #1e293b;
+  --border-light: #253042;
+  --border-dark: #334155;
+
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.25), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.35), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-primary: 0 4px 14px rgba(96, 165, 250, 0.15);
+  --shadow-primary-lg: 0 8px 30px rgba(96, 165, 250, 0.25);
 }
 
 * {
@@ -37,13 +158,24 @@ body.dark-mode {
   box-sizing: border-box;
 }
 
-html, body {
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
   width: 100%;
   min-height: 100vh;
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--text-primary);
+  background-color: var(--bg-color);
   overflow-x: hidden;
-  transition: color 0.3s ease;
+  transition: color var(--transition-base), background-color var(--transition-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
 
@@ -57,22 +189,18 @@ body:not(.dark-mode)::before {
   bottom: 0;
   z-index: -1;
   background: 
-    /* 顶部光晕 */
-    radial-gradient(ellipse 800px 600px at 20% 10%, rgba(26, 115, 232, 0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 600px 400px at 80% 20%, rgba(74, 154, 245, 0.06) 0%, transparent 70%),
-    /* 底部光晕 */
-    radial-gradient(ellipse 800px 500px at 70% 80%, rgba(13, 71, 161, 0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 500px 400px at 20% 70%, rgba(26, 115, 232, 0.04) 0%, transparent 70%),
-    /* 中间装饰光点 */
-    radial-gradient(circle 3px at 30% 40%, rgba(26, 115, 232, 0.12) 0%, transparent 100%),
-    radial-gradient(circle 2px at 70% 60%, rgba(74, 154, 245, 0.1) 0%, transparent 100%),
-    radial-gradient(circle 4px at 50% 30%, rgba(26, 115, 232, 0.08) 0%, transparent 100%),
+    /* 顶部光晕 - 品牌蓝 */
+    radial-gradient(ellipse 900px 500px at 15% 15%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 85% 10%, rgba(59, 130, 246, 0.04) 0%, transparent 65%),
+    /* 底部光晕 - 暖色点缀 */
+    radial-gradient(ellipse 700px 500px at 80% 85%, rgba(30, 64, 175, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 15% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 60%),
     /* 基础渐变 */
-    linear-gradient(180deg, #f8fafc 0%, #f0f4f8 50%, #f8fafc 100%);
+    linear-gradient(180deg, #fafbfc 0%, #f8fafc 40%, #f1f5f9 100%);
   pointer-events: none;
 }
 
-/* 网格装饰层 */
+/* 浅色模式 - 装饰纹理层 */
 body:not(.dark-mode)::after {
   content: '';
   position: fixed;
@@ -82,12 +210,11 @@ body:not(.dark-mode)::after {
   bottom: 0;
   z-index: -1;
   background-image: 
-    linear-gradient(rgba(26, 115, 232, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26, 115, 232, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+    radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.015) 1px, transparent 1px);
+  background-size: 48px 48px;
   pointer-events: none;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+  mask-image: radial-gradient(ellipse 70% 60% at 45% 35%, black 10%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 45% 35%, black 10%, transparent 75%);
 }
 
 /* ========== 深色模式背景设计 ========== */
@@ -100,17 +227,17 @@ body.dark-mode::before {
   bottom: 0;
   z-index: -1;
   background: 
-    /* 顶部光晕 */
-    radial-gradient(ellipse 800px 600px at 25% 15%, rgba(74, 154, 245, 0.12) 0%, transparent 65%),
-    radial-gradient(ellipse 600px 500px at 75% 25%, rgba(107, 179, 247, 0.08) 0%, transparent 65%),
+    /* 顶部光晕 - 品牌蓝 */
+    radial-gradient(ellipse 900px 500px at 20% 12%, rgba(96, 165, 250, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 600px 400px at 80% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 60%),
     /* 底部光晕 */
-    radial-gradient(ellipse 700px 400px at 65% 75%, rgba(26, 115, 232, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 700px 400px at 75% 85%, rgba(30, 64, 175, 0.06) 0%, transparent 65%),
     /* 基础渐变 */
-    linear-gradient(180deg, #0a0f1a 0%, #111827 50%, #0a0f1a 100%);
+    linear-gradient(180deg, #0b0f19 0%, #111827 45%, #0f1321 100%);
   pointer-events: none;
 }
 
-/* 深色模式网格装饰层 */
+/* 深色模式 - 装饰纹理层 */
 body.dark-mode::after {
   content: '';
   position: fixed;
@@ -120,12 +247,11 @@ body.dark-mode::after {
   bottom: 0;
   z-index: -1;
   background-image: 
-    linear-gradient(rgba(74, 154, 245, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74, 154, 245, 0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
+    radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
   pointer-events: none;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+  mask-image: radial-gradient(ellipse 70% 60% at 45% 35%, black 10%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 45% 35%, black 10%, transparent 75%);
 }
 
 #app {
@@ -133,57 +259,199 @@ body.dark-mode::after {
   min-height: 100vh;
 }
 
-/* 滚动条样式 */
+/* ========== 滚动条样式 ========== */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--bg-secondary);
+  border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 3px;
+  background: linear-gradient(180deg, var(--primary-400) 0%, var(--primary-600) 100%);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-base);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-light);
+  background: linear-gradient(180deg, var(--primary-300) 0%, var(--primary-500) 100%);
 }
 
-/* 页面切换动画 */
+/* 深色模式滚动条 */
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-700) 0%, var(--primary-500) 100%);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-600) 0%, var(--primary-400) 100%);
+}
+
+/* ========== 页面切换动画 ========== */
 .page-fade-enter-active,
 .page-fade-leave-active {
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: all var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .page-fade-enter-from {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(16px) scale(0.98);
+  filter: blur(4px);
 }
 
 .page-fade-leave-to {
   opacity: 0;
-  transform: translateY(-12px);
+  transform: translateY(-16px) scale(0.98);
+  filter: blur(4px);
 }
 
-/* Element Plus 主题覆盖 */
+/* ========== 通用工具类 ========== */
+.container-max {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+/* ========== 选择文本样式 ========== */
+::selection {
+  background: var(--primary-200);
+  color: var(--primary-900);
+}
+
+body.dark-mode ::selection {
+  background: var(--primary-800);
+  color: var(--primary-100);
+}
+
+/* ========== Element Plus 主题覆盖 ========== */
 .el-menu {
   border-right: none !important;
 }
 
 .el-menu-item {
   font-size: 15px !important;
+  transition: all var(--transition-fast) !important;
 }
 
 .el-card {
   background: var(--bg-card) !important;
   border: 1px solid var(--border-color) !important;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base) !important;
+  box-shadow: var(--shadow-sm) !important;
 }
 
 .el-card:hover {
   border-color: var(--primary-color) !important;
-  box-shadow: 0 4px 20px var(--shadow-color);
-  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ========== 链接样式 ========== */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-light);
+}
+
+/* ========== 按钮基础样式 ========== */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+button:hover {
+  filter: brightness(1.05);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* ========== 通用动画类 ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========== 玻璃态效果 ========== */
+.glass-effect {
+  background: var(--bg-overlay);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+}
+
+/* ========== 渐变边框 ========== */
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-lg);
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  padding: 1px;
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }

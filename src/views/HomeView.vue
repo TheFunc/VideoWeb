@@ -5,144 +5,209 @@
     <!-- 底部菜单栏 -->
     <BottomNavbar />
 
-    <!-- 标题：电梯安全科普平台 -->
-    <div class="platform-title">
-      <div class="title-card">
-        <h1>电梯安全科普平台</h1>
-      </div>
-    </div>
-
-    <!-- 轮播器区域 - 在标题下方 -->
-    <div class="carousel-section">
-      <div class="carousel-card">
-        <div class="carousel-container" @mouseenter="pauseAutoPlay" @mouseleave="resumeAutoPlay">
-          <div class="slide-wrapper">
-            <img
-              :key="currentIndex"
-              :src="images[currentIndex]"
-              class="carousel-slide"
-              alt="轮播图片"
-              @error="handleImageError"
-            />
-            <div class="slide-shine"></div>
-          </div>
-
-          <!-- 安全术语 -->
-          <div class="term-overlay">
-            <div class="term-badge">
-              <span class="badge-icon"></span>
-              安全提示
-            </div>
-            <p class="term-text">{{ safetyTerms[currentIndex] }}</p>
-          </div>
-
-          <!-- 左右箭头 -->
-          <button class="carousel-arrow prev" @click="prevSlide" title="上一张">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button class="carousel-arrow next" @click="nextSlide" title="下一张">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-
-          <!-- 指示器 -->
-          <div class="carousel-indicators">
-            <span
-              v-for="(image, index) in images"
-              :key="index"
-              class="indicator"
-              :class="{ active: currentIndex === index }"
-              @click="goToSlide(index)"
-            >
-              <span class="indicator-dot"></span>
-            </span>
-          </div>
+    <!-- 主内容区域 -->
+    <main class="main-content">
+      <!-- 平台标题区域 -->
+      <div class="platform-hero">
+        <div class="hero-bg-effects">
+          <div class="hero-glow hero-glow-1"></div>
+          <div class="hero-glow hero-glow-2"></div>
+          <div class="hero-glow hero-glow-3"></div>
         </div>
-      </div>
-    </div>
-
-    <!-- 三个功能卡片区域 -->
-    <div class="cards-section">
-      <div class="cards-container">
-        <!-- 法规天地卡片 -->
-        <div class="feature-card">
-          <div class="card-image-wrapper">
-            <img src="/card-regulations.png" alt="法规天地" class="card-image" />
-            <div class="card-overlay">
-              <span class="card-badge regulations-badge">法规天地</span>
-            </div>
+        <div class="platform-title">
+          <div class="title-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text">安全教育</span>
           </div>
-          <div class="card-content">
-            <h3 class="card-title">法规天地</h3>
-            <p class="card-description">了解电梯相关法规标准</p>
-            <router-link to="/regulations" class="card-button regulations-btn">
-              查看更多
-              <span class="button-arrow">→</span>
-            </router-link>
-            <div class="card-slogan">
-              <p>一、遵守电梯安全管理规定</p>
-              <p>二、严禁超载运行，注意载重限额</p>
-              <p>三、等待电梯时请站在黄色安全线内</p>
-              <p>四、电梯未到位严禁强行扒门</p>
-              <p>五、乘梯过程中严禁蹦跳打闹</p>
+          <h1 class="title-main">电梯安全科普平台</h1>
+          <p class="title-description">守护每一次升降，保障每一程安全</p>
+          <div class="title-stats">
+            <div class="stat-item">
+              <span class="stat-value">4</span>
+              <span class="stat-label">专栏内容</span>
             </div>
-          </div>
-        </div>
-
-        <!-- 安全讲堂卡片 -->
-        <div class="feature-card">
-          <div class="card-image-wrapper">
-            <img src="/card-safety.png" alt="安全讲堂" class="card-image" />
-            <div class="card-overlay">
-              <span class="card-badge safety-badge">安全讲堂</span>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-value">24h</span>
+              <span class="stat-label">随时学习</span>
             </div>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">安全讲堂</h3>
-            <p class="card-description">学习电梯安全使用知识</p>
-            <router-link to="/image-text" class="card-button safety-btn">
-              查看更多
-              <span class="button-arrow">→</span>
-            </router-link>
-            <div class="card-slogan">
-              <p>一、请先下后上，有序乘梯</p>
-              <p>二、主动礼让老人、儿童和残障人士</p>
-              <p>三、乘坐电梯时注意脚下安全</p>
-              <p>四、携带物品时注意不要遮挡警报器</p>
-              <p>五、发现电梯异常请立即按警铃求助</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 视频警示卡片 -->
-        <div class="feature-card">
-          <div class="card-image-wrapper">
-            <img src="/card-video.png" alt="视频警示" class="card-image" />
-            <div class="card-overlay">
-              <span class="card-badge video-badge">视频警示</span>
-            </div>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">视频警示</h3>
-            <p class="card-description">观看电梯安全警示教育</p>
-            <router-link to="/video-warning" class="card-button video-btn">
-              查看更多
-              <span class="button-arrow">→</span>
-            </router-link>
-            <div class="card-slogan">
-              <p>一、安全乘梯，预防为主，综合治理</p>
-              <p>二、熟读并使用电梯安全乘梯须知</p>
-              <p>三、一旦发生故障请不要惊慌按警铃</p>
-              <p>四、定期参加电梯安全应急演练活动</p>
-              <p>五、共同维护电梯安全运行环境</p>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-value">100%</span>
+              <span class="stat-label">免费开放</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- 轮播器区域 -->
+      <div class="carousel-section">
+        <div class="carousel-card">
+          <div class="carousel-container" @mouseenter="pauseAutoPlay" @mouseleave="resumeAutoPlay">
+            <div class="slide-wrapper">
+              <Transition :name="slideTransitionName" mode="out-in">
+                <img
+                  :key="currentIndex"
+                  :src="images[currentIndex]"
+                  class="carousel-slide"
+                  alt="轮播图片"
+                  @error="handleImageError"
+                />
+              </Transition>
+              <div class="slide-shine"></div>
+              <div class="slide-vignette"></div>
+            </div>
+
+            <!-- 安全术语 -->
+            <Transition name="term-fade" mode="out-in">
+              <div class="term-overlay" :key="currentIndex">
+                <div class="term-badge">
+                  <span class="badge-icon">🛡️</span>
+                  <span class="badge-label">安全提示</span>
+                </div>
+                <p class="term-text">{{ safetyTerms[currentIndex] }}</p>
+              </div>
+            </Transition>
+
+            <!-- 左右箭头 -->
+            <button class="carousel-arrow prev" @click="prevSlide" title="上一张">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="carousel-arrow next" @click="nextSlide" title="下一张">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <!-- 指示器 -->
+            <div class="carousel-indicators">
+              <span
+                v-for="(image, index) in images"
+                :key="index"
+                class="indicator"
+                :class="{ active: currentIndex === index }"
+                @click="goToSlide(index)"
+              >
+                <span class="indicator-dot"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三个功能卡片区域 -->
+      <div class="cards-section">
+        <div class="section-header">
+          <h2 class="section-title">探索学习内容</h2>
+          <p class="section-subtitle">选择您感兴趣的安全知识领域</p>
+        </div>
+        <div class="cards-container">
+          <!-- 法规天地卡片 -->
+          <div class="feature-card card-regulations">
+            <div class="card-glow"></div>
+            <div class="card-image-wrapper">
+              <img src="/card-regulations.png" alt="法规天地" class="card-image" />
+              <div class="card-overlay">
+                <span class="card-badge">法规天地</span>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="card-header">
+                <div class="card-icon-wrapper">
+                  <span class="card-icon">📋</span>
+                </div>
+                <h3 class="card-title">法规天地</h3>
+              </div>
+              <p class="card-description">了解电梯相关法规标准，掌握安全规范</p>
+              <router-link to="/regulations" class="card-button">
+                <span class="button-text">查看更多</span>
+                <span class="button-arrow">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </router-link>
+              <div class="card-tips">
+                <p v-for="(tip, index) in regulationsTips" :key="index" class="tip-item">
+                  <span class="tip-dot"></span>
+                  {{ tip }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 安全讲堂卡片 -->
+          <div class="feature-card card-safety">
+            <div class="card-glow"></div>
+            <div class="card-image-wrapper">
+              <img src="/card-safety.png" alt="安全讲堂" class="card-image" />
+              <div class="card-overlay">
+                <span class="card-badge">安全讲堂</span>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="card-header">
+                <div class="card-icon-wrapper">
+                  <span class="card-icon">📖</span>
+                </div>
+                <h3 class="card-title">安全讲堂</h3>
+              </div>
+              <p class="card-description">学习电梯安全使用知识，提高安全意识</p>
+              <router-link to="/image-text" class="card-button">
+                <span class="button-text">查看更多</span>
+                <span class="button-arrow">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </router-link>
+              <div class="card-tips">
+                <p v-for="(tip, index) in safetyTips" :key="index" class="tip-item">
+                  <span class="tip-dot"></span>
+                  {{ tip }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 视频警示卡片 -->
+          <div class="feature-card card-video">
+            <div class="card-glow"></div>
+            <div class="card-image-wrapper">
+              <img src="/card-video.png" alt="视频警示" class="card-image" />
+              <div class="card-overlay">
+                <span class="card-badge">视频警示</span>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="card-header">
+                <div class="card-icon-wrapper">
+                  <span class="card-icon">🎬</span>
+                </div>
+                <h3 class="card-title">视频警示</h3>
+              </div>
+              <p class="card-description">观看电梯安全警示教育，增强应急能力</p>
+              <router-link to="/video-warning" class="card-button">
+                <span class="button-text">查看更多</span>
+                <span class="button-arrow">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </router-link>
+              <div class="card-tips">
+                <p v-for="(tip, index) in videoTips" :key="index" class="tip-item">
+                  <span class="tip-dot"></span>
+                  {{ tip }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -163,9 +228,34 @@ const safetyTerms = [
   '请勿倚靠或拍打电梯门，防止意外开门或导致故障'
 ]
 
+const regulationsTips = [
+  '遵守电梯安全管理规定',
+  '严禁超载运行',
+  '站在黄色安全线内等待',
+  '严禁强行扒门',
+  '乘梯时不要蹦跳打闹'
+]
+
+const safetyTips = [
+  '请先下后上，有序乘梯',
+  '礼让老人、儿童和残障人士',
+  '注意脚下安全',
+  '不要遮挡警报器',
+  '发现异常立即按警铃'
+]
+
+const videoTips = [
+  '安全预防为主，综合治理',
+  '熟读安全乘梯须知',
+  '故障时按警铃求助',
+  '参加安全应急演练',
+  '共同维护运行环境'
+]
+
+const slideTransitionName = ref('slide-fade')
 const currentIndex = ref(0)
 let autoPlayTimer: number | null = null
-const AUTO_PLAY_INTERVAL = 3000
+const AUTO_PLAY_INTERVAL = 4000
 
 function handleImageError(event: Event) {
   const img = event.target as HTMLImageElement
@@ -223,101 +313,216 @@ onUnmounted(() => {
   background: transparent;
   display: flex;
   flex-direction: column;
+  padding-bottom: calc(var(--navbar-height) + 24px);
 }
 
+/* ========== 主内容区域 ========== */
+.main-content {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== 平台主页区域 ========== */
+.platform-hero {
+  position: relative;
+  padding: 48px 0 36px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* 背景光效 */
+.hero-bg-effects {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+}
+
+.hero-glow-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--primary-200);
+  top: -100px;
+  left: -50px;
+  animation: floatGlow 12s ease-in-out infinite;
+}
+
+.hero-glow-2 {
+  width: 250px;
+  height: 250px;
+  background: var(--primary-300);
+  top: -50px;
+  right: -30px;
+  animation: floatGlow 15s ease-in-out infinite reverse;
+}
+
+.hero-glow-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--primary-100);
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: floatGlow 10s ease-in-out infinite;
+}
+
+body.dark-mode .hero-glow {
+  opacity: 0.2;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -20px) scale(1.05); }
+  66% { transform: translate(-15px, 15px) scale(0.95); }
+}
+
+/* 标题徽章 */
+.title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
+  border: 1px solid var(--primary-200);
+  border-radius: var(--radius-full);
+  margin-bottom: 20px;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+body.dark-mode .title-badge {
+  background: linear-gradient(135deg, var(--primary-900), var(--primary-800));
+  border-color: var(--primary-700);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+.badge-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-color);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* 主标题 */
+.title-main {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin: 0 0 12px;
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 40%, var(--primary-400) 60%, var(--primary-500) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+  animation: gradientShift 5s ease-in-out infinite, fadeInUp 0.7s ease-out;
+  line-height: 1.3;
+  filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.15));
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* 副标题 */
+.title-description {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0 0 28px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* 统计数据 */
+.title-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  animation: scaleIn 0.9s ease-out;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border-color);
+}
+
+/* ========== 轮播器区域 ========== */
 .carousel-section {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px 40px 30px;
+  margin-bottom: 40px;
 }
 
-/* 平台标题 */
-.platform-title {
-  text-align: center;
-  padding: 24px 40px;
-  margin: 0;
-}
-
-.title-card {
-  display: inline-block;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(232, 240, 254, 0.5) 100%);
-  border-radius: 12px;
-  border: 1px solid rgba(26, 115, 232, 0.2);
-  padding: 18px 56px;
-  transition: all 0.3s ease;
-}
-
-.title-card:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(232, 240, 254, 0.6) 100%);
-  transform: translateY(-2px);
-}
-
-.platform-title h1 {
-  background: linear-gradient(135deg, #1a73e8 0%, #4a9af5 50%, #1a73e8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: 38px;
-  font-weight: 800;
-  margin: 0;
-  letter-spacing: 6px;
-  text-shadow: none;
-  filter: drop-shadow(0 2px 4px rgba(26, 115, 232, 0.2));
-}
-
-body.dark-mode .title-card {
-  background: linear-gradient(135deg, rgba(40, 50, 65, 0.85) 0%, rgba(35, 45, 60, 0.80) 100%);
-  border: 1px solid rgba(74, 154, 245, 0.2);
-}
-
-body.dark-mode .title-card:hover {
-  background: linear-gradient(135deg, rgba(45, 55, 70, 0.90) 0%, rgba(40, 50, 65, 0.85) 100%);
-}
-
-body.dark-mode .platform-title h1 {
-  background: linear-gradient(135deg, #4a9af5 0%, #6bb3f7 50%, #4a9af5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 2px 4px rgba(74, 154, 245, 0.3));
-}
-
-/* 卡片容器 */
 .carousel-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 255, 0.92) 100%);
-  border-radius: 16px;
-  box-shadow: 0 8px 40px rgba(102, 126, 234, 0.1), 0 2px 10px rgba(102, 126, 234, 0.05);
+  background: var(--bg-card);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(102, 126, 234, 0.12);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-slow);
 }
 
 .carousel-card:hover {
-  box-shadow: 0 12px 50px rgba(102, 126, 234, 0.18), 0 4px 15px rgba(102, 126, 234, 0.08);
+  box-shadow: var(--shadow-xl);
   transform: translateY(-2px);
-}
-
-body.dark-mode .carousel-card {
-  background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(25, 35, 60, 0.92) 100%);
-  box-shadow: 0 8px 40px rgba(74, 154, 245, 0.15), 0 2px 10px rgba(74, 154, 245, 0.08);
-  border: 1px solid rgba(74, 154, 245, 0.15);
-}
-
-body.dark-mode .carousel-card:hover {
-  box-shadow: 0 12px 50px rgba(74, 154, 245, 0.22), 0 4px 15px rgba(74, 154, 245, 0.12);
 }
 
 /* 轮播容器 */
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 400px;
-  border-radius: 12px;
-  overflow: hidden;
+  height: 380px;
 }
 
-/* 图片包装器 */
 .slide-wrapper {
   position: relative;
   width: 100%;
@@ -329,7 +534,7 @@ body.dark-mode .carousel-card:hover {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carousel-container:hover .carousel-slide {
@@ -346,11 +551,11 @@ body.dark-mode .carousel-card:hover {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.15) 50%,
     transparent 100%
   );
   transform: skewX(-20deg);
-  transition: left 1s ease;
+  transition: left 1.2s ease;
   pointer-events: none;
   z-index: 2;
 }
@@ -359,75 +564,119 @@ body.dark-mode .carousel-card:hover {
   left: 150%;
 }
 
+/* ========== 轮播图片切换过渡效果 ========== */
+/* 滑动淡入淡出效果 */
+.slide-fade-enter-active {
+  transition: all 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute;
+  inset: 0;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute;
+  inset: 0;
+}
+
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateX(40px) scale(0.98);
+  filter: blur(4px);
+}
+
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.98);
+  filter: blur(4px);
+}
+
+/* 安全术语淡入淡出过渡 */
+.term-fade-enter-active,
+.term-fade-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.term-fade-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.term-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+/* 暗角效果 */
+.slide-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* 安全术语 */
 .term-overlay {
   position: absolute;
-  bottom: 18px;
-  left: 22px;
+  bottom: 20px;
+  left: 24px;
   z-index: 3;
 }
 
 .term-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 11px;
-  background: rgba(239, 68, 68, 0.85);
-  backdrop-filter: blur(8px);
-  border-radius: 12px;
-  font-size: 10px;
-  font-weight: 600;
-  color: white;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(220, 38, 38, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-full);
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 .badge-icon {
-  width: 6px;
-  height: 6px;
-  background: #fca5a5;
-  border-radius: 50%;
-  animation: pulse-badge 2s ease-in-out infinite;
+  font-size: 12px;
 }
 
-@keyframes pulse-badge {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
+.badge-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.5px;
 }
 
 .term-text {
   color: #fff;
   font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.3px;
-  margin: 0;
+  margin: 8px 0 0;
   text-align: left;
   white-space: nowrap;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   line-height: 1.4;
 }
 
 /* 指示器 */
 .carousel-indicators {
   position: absolute;
-  bottom: 20px;
+  bottom: 24px;
   right: 24px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   z-index: 10;
 }
 
 .indicator {
   position: relative;
   display: block;
-  width: 34px;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.35);
-  border-radius: 2px;
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
   cursor: pointer;
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: all var(--transition-base);
 }
 
 .indicator-dot {
@@ -439,19 +688,19 @@ body.dark-mode .carousel-card:hover {
   background: rgba(255, 255, 255, 0.9);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.4s ease;
-  border-radius: 2px;
+  transition: transform var(--transition-slow);
+  border-radius: var(--radius-full);
 }
 
 .indicator:hover {
-  background: rgba(255, 255, 255, 0.55);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .indicator.active {
-  background: rgba(255, 255, 255, 0.9);
-  height: 4px;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  height: 5px;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
 }
 
 .indicator.active .indicator-dot {
@@ -463,153 +712,137 @@ body.dark-mode .carousel-card:hover {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border: none;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
   color: white;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-base);
   z-index: 10;
+  opacity: 0;
+}
+
+.carousel-container:hover .carousel-arrow {
+  opacity: 1;
 }
 
 .carousel-arrow:hover {
-  background: rgba(26, 115, 232, 0.7);
-  transform: translateY(-50%) scale(1.08);
-  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.35);
+  background: rgba(37, 99, 235, 0.7);
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
 }
 
 .carousel-arrow:active {
-  transform: translateY(-50%) scale(0.96);
+  transform: translateY(-50%) scale(0.95);
 }
 
 .carousel-arrow.prev {
-  left: 14px;
+  left: 16px;
 }
 
 .carousel-arrow.next {
-  right: 14px;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .carousel-section {
-    padding: 15px 20px 20px;
-  }
-
-  .carousel-container {
-    height: 300px;
-  }
-
-  .carousel-arrow {
-    width: 38px;
-    height: 38px;
-  }
-
-  .carousel-arrow.prev {
-    left: 10px;
-  }
-
-  .carousel-arrow.next {
-    right: 10px;
-  }
-
-  .term-overlay {
-    left: 16px;
-    bottom: 16px;
-  }
-
-  .term-text {
-    font-size: 13px;
-    white-space: normal;
-  }
-
-  .carousel-indicators {
-    right: 16px;
-    bottom: 16px;
-  }
-
-  .indicator {
-    width: 28px;
-    height: 3px;
-  }
-}
-
-@media (max-width: 480px) {
-  .carousel-container {
-    height: 220px;
-  }
-
-  .term-overlay {
-    display: none;
-  }
-
-  .carousel-indicators {
-    bottom: 12px;
-    right: 12px;
-  }
-
-  .carousel-arrow {
-    width: 34px;
-    height: 34px;
-  }
-
-  .carousel-arrow.prev {
-    left: 8px;
-  }
-
-  .carousel-arrow.next {
-    right: 8px;
-  }
+  right: 16px;
 }
 
 /* ========== 功能卡片区域 ========== */
 .cards-section {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px 40px 60px;
+  padding: 0 0 20px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin: 0;
+  font-weight: 400;
 }
 
 .cards-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 28px;
 }
 
 .feature-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 255, 0.92) 100%);
-  border-radius: 16px;
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(102, 126, 234, 0.12);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-slow);
+  position: relative;
+}
+
+.card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  pointer-events: none;
+}
+
+.card-regulations .card-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.1) 0%, transparent 60%);
+}
+
+.card-safety .card-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(5, 150, 105, 0.1) 0%, transparent 60%);
+}
+
+.card-video .card-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(220, 38, 38, 0.1) 0%, transparent 60%);
 }
 
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 16px 50px rgba(102, 126, 234, 0.2);
+  box-shadow: var(--shadow-xl);
+  border-color: transparent;
 }
 
-body.dark-mode .feature-card {
-  background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(25, 35, 60, 0.92) 100%);
-  box-shadow: 0 8px 30px rgba(74, 154, 245, 0.12);
-  border: 1px solid rgba(74, 154, 245, 0.15);
+.feature-card:hover .card-glow {
+  opacity: 1;
 }
 
-body.dark-mode .feature-card:hover {
-  box-shadow: 0 16px 50px rgba(74, 154, 245, 0.2);
+.feature-card:hover {
+  border-color: var(--primary-color);
+}
+
+.card-regulations:hover {
+  border-color: #2563eb;
+}
+
+.card-safety:hover {
+  border-color: #059669;
+}
+
+.card-video:hover {
+  border-color: #dc2626;
 }
 
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 180px;
   overflow: hidden;
 }
 
@@ -617,72 +850,90 @@ body.dark-mode .feature-card:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .feature-card:hover .card-image {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .card-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.4));
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.4));
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  padding: 15px;
+  padding: 16px;
 }
 
 .card-badge {
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
   font-weight: 600;
   color: white;
   backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.5px;
 }
 
-.regulations-badge {
-  background: rgba(26, 115, 232, 0.8);
-}
-
-.safety-badge {
-  background: rgba(34, 197, 94, 0.8);
-}
-
-.video-badge {
-  background: rgba(239, 68, 68, 0.8);
-}
-
+/* 卡片内容 */
 .card-content {
   padding: 24px;
 }
 
-.card-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 10px 0;
-  text-align: center;
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
 }
 
-body.dark-mode .card-title {
-  color: #f0f0f0;
+.card-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
+  flex-shrink: 0;
+}
+
+body.dark-mode .card-icon-wrapper {
+  background: linear-gradient(135deg, var(--primary-900), var(--primary-800));
+}
+
+.card-icon {
+  font-size: 22px;
+}
+
+.card-regulations .card-icon-wrapper {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+}
+
+.card-safety .card-icon-wrapper {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+}
+
+.card-video .card-icon-wrapper {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: 0.3px;
 }
 
 .card-description {
   font-size: 14px;
-  color: #666;
-  margin: 0 0 20px 0;
-  text-align: center;
-}
-
-body.dark-mode .card-description {
-  color: #a0a0a0;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  line-height: 1.6;
 }
 
 .card-button {
@@ -691,99 +942,241 @@ body.dark-mode .card-description {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 12px 24px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 25px;
-  font-size: 15px;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
   font-weight: 600;
   color: white;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base);
   text-decoration: none;
   margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
 }
 
-.regulations-btn {
-  background: linear-gradient(135deg, #1a73e8 0%, #4a9af5 100%);
+.card-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
 }
 
-.regulations-btn:hover {
-  background: linear-gradient(135deg, #1557b0 0%, #3584e4 100%);
-  transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+.card-button:hover::before {
+  opacity: 1;
 }
 
-.safety-btn {
-  background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+.card-regulations .card-button {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
 }
 
-.safety-btn:hover {
-  background: linear-gradient(135deg, #16a34a 0%, #16b46a 100%);
-  transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+.card-safety .card-button {
+  background: linear-gradient(135deg, #059669, #10b981);
 }
 
-.video-btn {
-  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+.card-video .card-button {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
 }
 
-.video-btn:hover {
-  background: linear-gradient(135deg, #dc2626 0%, #ea5656 100%);
-  transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+.card-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .button-arrow {
-  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  transition: transform var(--transition-base);
 }
 
 .card-button:hover .button-arrow {
   transform: translateX(4px);
 }
 
-.card-slogan {
+/* 安全提示 */
+.card-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tip-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 12px;
-  color: #888;
-  margin: 0;
-  text-align: center;
-  line-height: 1.6;
+  color: var(--text-tertiary);
+  line-height: 1.5;
 }
 
-.card-slogan p {
-  margin: 4px 0;
-  font-style: italic;
+.tip-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  flex-shrink: 0;
+  margin-top: 5px;
 }
 
-body.dark-mode .card-slogan {
-  color: #808080;
-}
-
+/* ========== 响应式设计 ========== */
 @media (max-width: 1024px) {
   .cards-container {
     gap: 20px;
   }
-
-  .card-image-wrapper {
-    height: 180px;
+  
+  .title-main {
+    font-size: 36px;
+  }
+  
+  .carousel-container {
+    height: 340px;
   }
 }
 
 @media (max-width: 768px) {
-  .cards-section {
-    padding: 20px 20px 40px;
+  .main-content {
+    padding: 0 16px;
   }
-
+  
+  .platform-hero {
+    padding: 32px 0 24px;
+  }
+  
+  .title-main {
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+  
+  .title-description {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .title-stats {
+    padding: 12px 20px;
+    gap: 16px;
+  }
+  
+  .stat-value {
+    font-size: 18px;
+  }
+  
+  .carousel-container {
+    height: 280px;
+  }
+  
+  .carousel-arrow {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .carousel-arrow.prev {
+    left: 10px;
+  }
+  
+  .carousel-arrow.next {
+    right: 10px;
+  }
+  
+  .term-overlay {
+    left: 16px;
+    bottom: 16px;
+  }
+  
+  .term-text {
+    font-size: 13px;
+    white-space: normal;
+  }
+  
+  .section-title {
+    font-size: 24px;
+  }
+  
   .cards-container {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-
+  
   .card-image-wrapper {
-    height: 200px;
+    height: 180px;
   }
-
+  
   .card-content {
     padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .platform-hero {
+    padding: 24px 0 20px;
+  }
+  
+  .title-main {
+    font-size: 24px;
+  }
+  
+  .title-description {
+    font-size: 13px;
+  }
+  
+  .title-stats {
+    padding: 10px 16px;
+    gap: 12px;
+  }
+  
+  .stat-value {
+    font-size: 16px;
+  }
+  
+  .stat-label {
+    font-size: 10px;
+  }
+  
+  .carousel-container {
+    height: 220px;
+  }
+  
+  .term-overlay {
+    display: none;
+  }
+  
+  .carousel-indicators {
+    bottom: 16px;
+    right: 16px;
+  }
+  
+  .indicator {
+    width: 32px;
+    height: 3px;
+  }
+  
+  .carousel-arrow {
+    width: 34px;
+    height: 34px;
+  }
+  
+  .section-header {
+    margin-bottom: 24px;
+  }
+  
+  .section-title {
+    font-size: 22px;
+  }
+  
+  .card-icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .card-icon {
+    font-size: 20px;
+  }
+  
+  .card-title {
+    font-size: 18px;
   }
 }
 </style>

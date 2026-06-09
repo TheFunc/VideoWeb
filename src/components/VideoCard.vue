@@ -36,26 +36,20 @@ function handleClick() {
 
 <style scoped>
 .video-card {
-  width: 280px;
-  flex-shrink: 0;
-  border-radius: 12px;
+  width: 100%;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(232, 240, 254, 0.90) 100%);
-  border: 1px solid rgba(26, 115, 232, 0.15);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-/* 深色模式下卡片背景 */
-body.dark-mode .video-card {
-  background: linear-gradient(135deg, rgba(30, 40, 55, 0.95) 0%, rgba(26, 58, 95, 0.90) 100%);
-  border: 1px solid rgba(74, 154, 245, 0.2);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
 }
 
 .video-card:hover {
   transform: translateY(-4px);
   border-color: var(--primary-color);
-  box-shadow: 0 8px 25px rgba(26, 115, 232, 0.12);
+  box-shadow: var(--shadow-lg);
 }
 
 .card-cover {

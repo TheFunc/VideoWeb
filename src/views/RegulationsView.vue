@@ -5,10 +5,27 @@
     <BottomNavbar />
     
     <div class="regulations-content">
+      <!-- 页面头部 -->
+      <div class="page-header">
+        <div class="header-left">
+          <h1 class="page-title">
+            <span class="title-icon">📋</span>
+            法规天地
+          </h1>
+          <p class="page-subtitle">电梯安全法规与标准规范</p>
+        </div>
+        <div class="header-right">
+          <span class="text-count-badge">
+            <span class="count-dot"></span>
+            {{ Object.keys(groupedTexts).length }} 个分类
+          </span>
+        </div>
+      </div>
+
       <!-- 加载状态 -->
       <div v-if="loading" class="loading-state">
         <div class="loading-spinner"></div>
-        <p>加载中...</p>
+        <p>正在加载法规内容...</p>
       </div>
 
       <!-- 空状态 -->
@@ -28,6 +45,7 @@
           <h2 class="group-title">
             <span class="group-icon">📖</span>
             {{ textType }}
+            <span class="group-count">{{ texts.length }}</span>
           </h2>
           
           <div class="text-list">
@@ -37,14 +55,22 @@
               class="text-card"
               @click="viewDetail(item)"
             >
+              <div class="card-glow"></div>
               <div class="card-header">
-                <span class="type-tag">{{ item.TextType }}</span>
-                <span class="date">{{ formatDate(item.created_at) }}</span>
+                <div class="card-meta">
+                  <span class="type-tag">{{ item.TextType }}</span>
+                  <span class="date">{{ formatDate(item.created_at) }}</span>
+                </div>
               </div>
               <h3 class="card-title">{{ getFirstLine(item.TextContent) }}</h3>
-              <p class="card-preview">{{ truncateText(item.TextContent, 120) }}</p>
+              <p class="card-preview">{{ truncateText(item.TextContent, 100) }}</p>
               <div class="card-footer">
-                <span class="read-more">阅读全文 →</span>
+                <span class="read-more">
+                  阅读全文
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
@@ -91,7 +117,6 @@ function getFirstLine(content: string): string {
 // 截断文本预览
 function truncateText(text: string, length: number): string {
   if (!text) return ''
-  // 移除Markdown标记
   const plainText = text.replace(/[#*_`\[\]]/g, '').replace(/\n/g, ' ')
   return plainText.length > length 
     ? plainText.substring(0, length) + '...' 
@@ -119,7 +144,6 @@ async function loadData() {
   loading.value = true
   
   try {
-    // 获取所有文本
     allTexts.value = await getTextList()
     console.log('✅ 文本列表加载成功:', allTexts.value.length, '条')
   } catch (error) {
@@ -143,70 +167,112 @@ onMounted(() => {
 .regulations-content {
   position: relative;
   z-index: 10;
-  max-width: 1400px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: 30px 40px 40px;
+  padding: 28px 32px 100px;
 }
 
+/* ========== 页面头部 ========== */
 .page-header {
-  text-align: center;
-  margin-bottom: 40px;
-  padding-bottom: 24px;
-  border-bottom: 2px solid var(--border-color);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-left {
+  flex: 1;
 }
 
 .page-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 8px 0;
+  margin: 0 0 6px;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
 }
 
 .title-icon {
-  font-size: 36px;
+  font-size: 30px;
 }
 
 .page-subtitle {
-  font-size: 16px;
-  color: var(--text-secondary);
+  font-size: 14px;
+  color: var(--text-tertiary);
   margin: 0;
+  font-weight: 400;
 }
 
-/* 加载状态 */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.text-count-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+body.dark-mode .text-count-badge {
+  background: var(--primary-900);
+  border-color: var(--primary-800);
+}
+
+.count-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+/* ========== 加载状态 ========== */
 .loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
+  gap: 16px;
 }
 
 .loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid var(--border-color);
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .loading-state p {
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
-/* 空状态 */
+/* ========== 空状态 ========== */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -214,31 +280,35 @@ onMounted(() => {
   justify-content: center;
   padding: 80px 20px;
   text-align: center;
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  border: 2px dashed var(--border-color);
 }
 
 .empty-icon {
   font-size: 64px;
   margin-bottom: 16px;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .empty-text {
   font-size: 18px;
   color: var(--text-primary);
-  margin: 0 0 8px 0;
+  margin: 0 0 8px;
+  font-weight: 500;
 }
 
 .empty-hint {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   margin: 0;
 }
 
-/* 文本分组 */
+/* ========== 文本分组 ========== */
 .text-groups {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 48px;
 }
 
 .text-group {
@@ -246,22 +316,41 @@ onMounted(() => {
 }
 
 .group-title {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 20px 0;
-  padding-left: 12px;
+  margin: 0 0 24px;
+  padding-left: 16px;
   border-left: 4px solid var(--primary-color);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .group-icon {
-  font-size: 24px;
+  font-size: 22px;
 }
 
-/* 文本列表 - 从上到下排列 */
+.group-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 10px;
+  background: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-left: auto;
+}
+
+body.dark-mode .group-count {
+  background: var(--primary-900);
+  border-color: var(--primary-800);
+}
+
+/* ========== 文本列表 ========== */
 .text-list {
   display: flex;
   flex-direction: column;
@@ -269,62 +358,89 @@ onMounted(() => {
 }
 
 .text-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 246, 255, 0.90) 100%);
-  border: 1px solid rgba(155, 139, 230, 0.2);
-  border-radius: 12px;
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   padding: 20px 24px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+}
+
+.card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(circle at 0% 50%, var(--primary-100) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+body.dark-mode .card-glow {
+  background: radial-gradient(circle at 0% 50%, var(--primary-900) 0%, transparent 50%);
 }
 
 .text-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.4);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
 }
 
-body.dark-mode .text-card {
-  background: linear-gradient(135deg, rgba(35, 30, 50, 0.95) 0%, rgba(40, 35, 60, 0.90) 100%);
-  border: 1px solid rgba(167, 139, 250, 0.2);
+.text-card:hover .card-glow {
+  opacity: 1;
 }
 
 .card-header {
+  margin-bottom: 10px;
+}
+
+.card-meta {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  gap: 12px;
 }
 
 .type-tag {
   padding: 4px 12px;
-  background: var(--primary-light);
+  background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
   color: var(--primary-color);
-  border-radius: 16px;
+  border-radius: var(--radius-full);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+body.dark-mode .type-tag {
+  background: linear-gradient(135deg, var(--primary-900), var(--primary-800));
 }
 
 .date {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
 }
 
 .card-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0 0 10px 0;
-  line-height: 1.4;
+  margin: 0 0 8px;
+  line-height: 1.5;
+  transition: color var(--transition-fast);
+}
+
+.text-card:hover .card-title {
+  color: var(--primary-color);
 }
 
 .card-preview {
   font-size: 14px;
   color: var(--text-secondary);
-  margin: 0 0 12px 0;
+  margin: 0 0 14px;
   line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -335,32 +451,45 @@ body.dark-mode .text-card {
 }
 
 .read-more {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--primary-color);
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap var(--transition-base);
 }
 
 .text-card:hover .read-more {
+  gap: 8px;
+}
+
+.read-more svg {
+  transition: transform var(--transition-base);
+}
+
+.text-card:hover .read-more svg {
   transform: translateX(4px);
 }
 
-/* 响应式设计 */
+/* ========== 响应式设计 ========== */
 @media (max-width: 768px) {
   .regulations-content {
-    padding: 20px 20px 30px;
+    padding: 20px 20px 100px;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    gap: 12px;
   }
   
   .page-title {
-    font-size: 26px;
-  }
-  
-  .title-icon {
-    font-size: 28px;
+    font-size: 24px;
   }
   
   .group-title {
     font-size: 20px;
+    padding-left: 12px;
   }
   
   .text-card {
@@ -377,10 +506,10 @@ body.dark-mode .text-card {
     font-size: 22px;
   }
   
-  .card-header {
+  .card-meta {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 6px;
   }
 }
 </style>

@@ -2,44 +2,73 @@
   <div class="image-text-view">
     <ParticleEffect />
     <LogoHeader />
-    
-    <!-- 底部导航栏 -->
     <BottomNavbar />
     
     <!-- 筛选和搜索区域 -->
     <div class="filter-section">
-      <div class="filter-left">
-        <select v-model="selectedType" @change="loadImages" class="type-select">
-          <option value="">全部类型</option>
-          <option v-for="type in types" :key="type.id" :value="type.type">
-            {{ type.type }}
-          </option>
-        </select>
-      </div>
-      
-      <div class="filter-right">
-        <div class="search-box">
-          <input
-            v-model="keyword"
-            @input="debounceSearch"
-            type="text"
-            class="search-input"
-            placeholder="搜索图片组名..."
-          />
-          <button v-if="keyword" class="clear-btn" @click="clearSearch" title="清空">
-            ×
-          </button>
-          <span class="search-icon">🔍</span>
+      <div class="filter-container">
+        <div class="filter-left">
+          <div class="type-select-wrapper">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="select-icon">
+              <path d="M3 5H21L13 12V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V12L3 5Z" fill="currentColor"/>
+            </svg>
+            <select v-model="selectedType" @change="loadImages" class="type-select">
+              <option value="">全部类型</option>
+              <option v-for="type in types" :key="type.id" :value="type.type">
+                {{ type.type }}
+              </option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="filter-right">
+          <div class="search-box">
+            <span class="search-icon-wrapper">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <input
+              v-model="keyword"
+              @input="debounceSearch"
+              type="text"
+              class="search-input"
+              placeholder="搜索图片组名..."
+            />
+            <button v-if="keyword" class="clear-btn" @click="clearSearch" title="清空">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
     
     <!-- 内容区域 -->
     <div class="content-area">
+      <!-- 页面头部 -->
+      <div class="page-header">
+        <div class="header-left">
+          <h1 class="page-title">
+            <span class="title-icon">📸</span>
+            安全讲堂
+          </h1>
+          <p class="page-subtitle">图文并茂的安全知识讲解</p>
+        </div>
+        <div class="header-right">
+          <span class="image-count-badge">
+            <span class="count-dot"></span>
+            {{ imageList.length }} 个图文
+          </span>
+        </div>
+      </div>
+
       <!-- 加载状态 -->
       <div v-if="loading" class="loading-state">
         <div class="loading-spinner"></div>
-        <p>加载中...</p>
+        <p>正在加载图文内容...</p>
       </div>
       
       <!-- 空状态 -->
@@ -56,6 +85,7 @@
           class="image-card" 
           @click="viewImageDetail(image)"
         >
+          <div class="card-glow"></div>
           <div class="image-wrapper">
             <img 
               :src="getFullUrl(image.coverPath)" 
@@ -63,6 +93,9 @@
               @error="handleImageError"
               loading="lazy"
             />
+            <div class="image-overlay">
+              <span class="view-text">查看详情</span>
+            </div>
           </div>
           <div class="image-info">
             <h4>{{ image.imageGroup }}</h4>
@@ -80,7 +113,9 @@
     <div v-if="showDetail" class="detail-modal" @click.self="closeDetail">
       <div class="detail-content">
         <button class="close-btn" @click="closeDetail" title="关闭">
-          <span>✕</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
         </button>
         
         <div v-if="detailLoading" class="detail-loading">
@@ -172,14 +207,12 @@ const renderedDescription = computed(() => {
   }
 })
 
-// 获取完整URL - 使用后端API的基础URL
+// 获取完整URL
 function getFullUrl(path: string) {
   if (!path) return ''
-  // 如果已经是完整URL，直接返回
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return path
   }
-  // 拼接后端服务器地址
   const baseUrl = 'http://127.0.0.1:8000'
   return baseUrl + '/' + path
 }
@@ -205,7 +238,6 @@ function handleImageError(event: Event) {
 async function loadTypes() {
   try {
     types.value = await getImageTextTypes()
-    console.log('✅ 图片类型列表:', types.value)
   } catch (error) {
     console.error('❌ 加载类型失败:', error)
   }
@@ -218,7 +250,6 @@ async function loadImages() {
   try {
     const list = await getImageTextList(keyword.value, selectedType.value)
     imageList.value = list
-    console.log('✅ 图片列表:', list)
   } catch (error) {
     console.error('❌ 加载图片失败:', error)
     imageList.value = []
@@ -250,13 +281,10 @@ async function viewImageDetail(image: any) {
   detailLoading.value = true
   
   try {
-    // 获取完整的图片详情
     const detail = await getImageTextDetail(image.id)
     currentImage.value = detail
-    console.log('✅ 图片详情:', detail)
   } catch (error) {
     console.error('❌ 加载详情失败:', error)
-    // 如果获取详情失败，使用列表中的数据
     currentImage.value = image
   } finally {
     detailLoading.value = false
@@ -286,25 +314,27 @@ onUnmounted(() => {
 <style scoped>
 .image-text-view {
   min-height: 100vh;
-  background: var(--bg-primary);
+  background: var(--bg-color);
   display: flex;
   flex-direction: column;
-  padding-top: 0;
 }
 
-/* 筛选区域 */
+/* ========== 筛选区域 ========== */
 .filter-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 30px;
-  background: rgba(255, 255, 255, 0.85);
+  padding: 16px 32px;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
-  gap: 20px;
+  transition: all var(--transition-base);
 }
 
-body.dark-mode .filter-section {
-  background: rgba(30, 35, 48, 0.85);
+.filter-container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 .filter-left {
@@ -317,21 +347,35 @@ body.dark-mode .filter-section {
   justify-content: flex-end;
 }
 
-.type-select {
-  padding: 10px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--text-primary);
-  font-size: 14px;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease;
-  min-width: 150px;
+/* 类型选择 */
+.type-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-body.dark-mode .type-select {
-  background: rgba(40, 45, 58, 0.9);
+.select-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.type-select {
+  padding: 10px 40px 10px 36px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-base);
+  min-width: 160px;
+  appearance: none;
+  box-shadow: var(--shadow-xs);
 }
 
 .type-select:hover {
@@ -340,7 +384,7 @@ body.dark-mode .type-select {
 
 .type-select:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 /* 搜索框 */
@@ -348,38 +392,42 @@ body.dark-mode .type-select {
   position: relative;
   display: flex;
   align-items: center;
-  width: 300px;
+  width: 320px;
+}
+
+.search-icon-wrapper {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-base);
 }
 
 .search-input {
   width: 100%;
-  height: 40px;
-  padding: 0 40px 0 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  height: 42px;
+  padding: 0 36px 0 42px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
   font-size: 14px;
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--bg-card);
   outline: none;
-  transition: all 0.3s ease;
-}
-
-body.dark-mode .search-input {
-  background: rgba(40, 45, 58, 0.9);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-xs);
 }
 
 .search-input:focus {
   border-color: var(--primary-color);
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
-}
-
-body.dark-mode .search-input:focus {
-  background: var(--bg-card);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .search-input::placeholder {
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
 }
 
 .clear-btn {
@@ -389,34 +437,98 @@ body.dark-mode .search-input:focus {
   height: 24px;
   border: none;
   background: transparent;
-  color: var(--text-secondary);
-  font-size: 20px;
-  line-height: 1;
+  color: var(--text-tertiary);
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
 }
 
 .clear-btn:hover {
-  background: var(--border-color);
-  color: var(--text-primary);
+  background: var(--danger-50);
+  color: var(--danger-color);
 }
 
-.search-icon {
-  position: absolute;
-  right: 12px;
-  font-size: 16px;
-  pointer-events: none;
-}
-
-/* 内容区域 */
+/* ========== 内容区域 ========== */
 .content-area {
   flex: 1;
-  padding: 30px;
-  overflow-y: auto;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 24px 32px 120px;
+  width: 100%;
+}
+
+/* 页面头部 */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-left {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-icon {
+  font-size: 28px;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin: 0;
+  font-weight: 400;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.image-count-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+body.dark-mode .image-count-badge {
+  background: var(--primary-900);
+  border-color: var(--primary-800);
+}
+
+.count-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
 }
 
 /* 加载状态 */
@@ -425,28 +537,27 @@ body.dark-mode .search-input:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  padding: 80px 20px;
+  gap: 16px;
 }
 
 .loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid var(--border-color);
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .loading-state p {
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 /* 空状态 */
@@ -455,15 +566,14 @@ body.dark-mode .search-input:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
-  padding: 60px 20px;
+  padding: 80px 20px;
   background: var(--bg-card);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   border: 2px dashed var(--border-color);
 }
 
 .empty-icon {
-  font-size: 80px;
+  font-size: 64px;
   margin-bottom: 16px;
   opacity: 0.5;
 }
@@ -474,7 +584,7 @@ body.dark-mode .search-input:focus {
   margin: 0;
 }
 
-/* 图片网格 */
+/* ========== 图片网格 ========== */
 .image-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -482,23 +592,34 @@ body.dark-mode .search-input:focus {
 }
 
 .image-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 254, 255, 0.90) 100%);
-  border: 1px solid rgba(74, 154, 245, 0.15);
-  border-radius: 12px;
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
 }
 
-body.dark-mode .image-card {
-  background: linear-gradient(135deg, rgba(25, 35, 50, 0.95) 0%, rgba(20, 45, 65, 0.90) 100%);
-  border: 1px solid rgba(74, 154, 245, 0.2);
+.card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
 }
 
 .image-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
   border-color: var(--primary-color);
+}
+
+.image-card:hover .card-glow {
+  opacity: 1;
 }
 
 .image-wrapper {
@@ -513,29 +634,58 @@ body.dark-mode .image-card {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .image-card:hover .image-wrapper img {
-  transform: scale(1.05);
+  transform: scale(1.08);
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.6));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.image-card:hover .image-overlay {
+  opacity: 1;
+}
+
+.view-text {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .image-info {
-  padding: 16px;
+  padding: 18px;
 }
 
 .image-info h4 {
-  margin: 0 0 8px 0;
+  margin: 0 0 8px;
   color: var(--text-primary);
   font-size: 16px;
   font-weight: 600;
   line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .image-info p {
-  margin: 0 0 12px 0;
+  margin: 0 0 12px;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -547,98 +697,79 @@ body.dark-mode .image-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto;
 }
 
 .image-type {
   display: inline-block;
   padding: 4px 12px;
-  background: linear-gradient(135deg, #4a9af5, #1a73e8);
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
   color: white;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .image-date {
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   font-size: 12px;
 }
 
-/* 详情弹窗 */
+/* ========== 详情弹窗 ========== */
 .detail-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
-  animation: fadeIn 0.3s ease;
+  padding: 24px;
+  animation: fadeIn 0.2s ease;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .detail-content {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-radius: 16px;
+  position: relative;
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: slideUp 0.3s ease;
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-2xl);
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-body.dark-mode .detail-content {
-  background: rgba(30, 35, 48, 0.9);
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .close-btn {
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: none;
   background: rgba(0, 0, 0, 0.5);
   color: white;
-  font-size: 24px;
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base);
   z-index: 10;
 }
 
 .close-btn:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   transform: rotate(90deg);
 }
 
@@ -649,19 +780,26 @@ body.dark-mode .detail-content {
   justify-content: center;
   min-height: 400px;
   padding: 60px 20px;
+  gap: 16px;
+}
+
+.detail-loading p {
+  color: var(--text-secondary);
 }
 
 .detail-body {
-  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .detail-image-wrapper {
   width: 100%;
-  background: var(--bg-secondary);
+  min-height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  overflow: hidden;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .detail-image-wrapper img {
@@ -672,41 +810,42 @@ body.dark-mode .detail-content {
 }
 
 .detail-info {
-  padding: 30px;
+  padding: 28px 32px;
 }
 
 .detail-info h2 {
-  margin: 0 0 16px 0;
+  margin: 0 0 16px;
   color: var(--text-primary);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .detail-meta {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 20px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .detail-type {
   display: inline-block;
-  padding: 6px 16px;
-  background: linear-gradient(135deg, #4a9af5, #1a73e8);
+  padding: 6px 14px;
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
   color: white;
-  border-radius: 16px;
-  font-size: 14px;
-  font-weight: 500;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .detail-date {
-  color: var(--text-secondary);
-  font-size: 14px;
+  color: var(--text-tertiary);
+  font-size: 13px;
 }
 
 .detail-description {
   color: var(--text-primary);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.8;
   margin: 0;
 }
@@ -721,12 +860,6 @@ body.dark-mode .detail-content {
   margin: 20px 0 12px;
   font-weight: 600;
   color: var(--text-primary);
-}
-
-.markdown-body :deep(h3) {
-  font-size: 18px;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 6px;
 }
 
 .markdown-body :deep(p) {
@@ -746,21 +879,17 @@ body.dark-mode .detail-content {
 .markdown-body :deep(code) {
   padding: 2px 6px;
   background: var(--bg-secondary);
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
   font-size: 0.9em;
 }
 
 .markdown-body :deep(pre) {
   margin: 16px 0;
   padding: 16px;
-  background: #f6f8fa;
-  border-radius: 8px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
   overflow-x: auto;
-}
-
-body.dark-mode .markdown-body :deep(pre) {
-  background: #2d2d2d;
 }
 
 .markdown-body :deep(pre code) {
@@ -769,53 +898,22 @@ body.dark-mode .markdown-body :deep(pre) {
   color: inherit;
 }
 
-/* highlight.js 代码高亮样式覆盖 */
-.markdown-body :deep(.hljs) {
-  background: transparent !important;
-  padding: 0 !important;
-}
-
-.markdown-body :deep(table) {
-  width: 100%;
-  margin: 16px 0;
-  border-collapse: collapse;
-  border: 1px solid var(--border-color);
-}
-
-.markdown-body :deep(th),
-.markdown-body :deep(td) {
-  padding: 10px 14px;
-  border: 1px solid var(--border-color);
-  text-align: left;
-}
-
-.markdown-body :deep(th) {
-  background: var(--bg-secondary);
-  font-weight: 600;
-}
-
 .markdown-body :deep(blockquote) {
   margin: 16px 0;
   padding: 12px 20px;
   background: var(--bg-secondary);
   border-left: 4px solid var(--primary-color);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
-.markdown-body :deep(strong) {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.markdown-body :deep(em) {
-  font-style: italic;
-}
-
-/* 响应式设计 */
+/* ========== 响应式设计 ========== */
 @media (max-width: 768px) {
   .filter-section {
+    padding: 12px 20px;
+  }
+  
+  .filter-container {
     flex-direction: column;
-    padding: 16px 20px;
     gap: 12px;
   }
   
@@ -833,20 +931,21 @@ body.dark-mode .markdown-body :deep(pre) {
   }
   
   .content-area {
-    padding: 20px;
+    padding: 20px 20px 120px;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .page-title {
+    font-size: 22px;
   }
   
   .image-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 16px;
-  }
-  
-  .detail-modal {
-    padding: 10px;
-  }
-  
-  .detail-content {
-    max-height: 95vh;
   }
   
   .detail-info {
@@ -856,23 +955,23 @@ body.dark-mode .markdown-body :deep(pre) {
   .detail-info h2 {
     font-size: 20px;
   }
-  
-  .detail-description {
-    font-size: 14px;
-  }
 }
 
 @media (max-width: 480px) {
   .filter-section {
-    padding: 12px 16px;
+    padding: 10px 16px;
   }
   
   .content-area {
-    padding: 16px;
+    padding: 16px 16px 120px;
   }
   
   .image-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .detail-modal {
+    padding: 12px;
   }
   
   .detail-image-wrapper {
