@@ -2,7 +2,7 @@
   <div class="home-view">
     <LogoHeader />
 
-    <!-- 底部菜单栏 -->
+    <!-- 顶部菜单栏 -->
     <BottomNavbar />
 
     <!-- 主内容区域 -->
@@ -19,8 +19,7 @@
             <span class="badge-dot"></span>
             <span class="badge-text">安全教育</span>
           </div>
-          <h1 class="title-main">电梯安全科普平台</h1>
-          <p class="title-description">守护每一次升降，保障每一程安全</p>
+          <h1 class="title-main">电梯安全运维在线平台</h1>
           <div class="title-stats">
             <div class="stat-item">
               <span class="stat-value">4</span>
@@ -43,7 +42,7 @@
       <!-- 轮播器区域 -->
       <div class="carousel-section">
         <div class="carousel-card">
-          <div class="carousel-container" @mouseenter="pauseAutoPlay" @mouseleave="resumeAutoPlay">
+          <div class="carousel-container">
             <div class="slide-wrapper">
               <Transition :name="slideTransitionName" mode="out-in">
                 <img
@@ -212,17 +211,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import LogoHeader from '@/components/LogoHeader.vue'
 import BottomNavbar from '@/components/BottomNavbar.vue'
 
 const images = [
+  '/carousel-banner.jpg',
   '/carousel-1.jpg',
   '/carousel-2.jpg',
   '/carousel-3.jpg'
 ]
 
 const safetyTerms = [
+  '电梯安全运维，定期检查保养，防患于未然',
   '请先下后上，有序乘梯，避免拥堵',
   '电梯超载时，请最后进入的乘客主动退出，确保运行安全',
   '请勿倚靠或拍打电梯门，防止意外开门或导致故障'
@@ -254,8 +255,6 @@ const videoTips = [
 
 const slideTransitionName = ref('slide-fade')
 const currentIndex = ref(0)
-let autoPlayTimer: number | null = null
-const AUTO_PLAY_INTERVAL = 4000
 
 function handleImageError(event: Event) {
   const img = event.target as HTMLImageElement
@@ -274,36 +273,6 @@ function nextSlide() {
 function prevSlide() {
   currentIndex.value = (currentIndex.value - 1 + images.length) % images.length
 }
-
-function startAutoPlay() {
-  stopAutoPlay()
-  autoPlayTimer = window.setInterval(() => {
-    nextSlide()
-  }, AUTO_PLAY_INTERVAL)
-}
-
-function stopAutoPlay() {
-  if (autoPlayTimer !== null) {
-    clearInterval(autoPlayTimer)
-    autoPlayTimer = null
-  }
-}
-
-function pauseAutoPlay() {
-  stopAutoPlay()
-}
-
-function resumeAutoPlay() {
-  startAutoPlay()
-}
-
-onMounted(() => {
-  startAutoPlay()
-})
-
-onUnmounted(() => {
-  stopAutoPlay()
-})
 </script>
 
 <style scoped>
@@ -313,7 +282,6 @@ onUnmounted(() => {
   background: transparent;
   display: flex;
   flex-direction: column;
-  padding-bottom: calc(var(--navbar-height) + 24px);
 }
 
 /* ========== 主内容区域 ========== */
@@ -447,16 +415,6 @@ body.dark-mode .title-badge {
   50% { background-position: 100% 50%; }
 }
 
-/* 副标题 */
-.title-description {
-  font-size: 16px;
-  color: var(--text-secondary);
-  margin: 0 0 28px;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  animation: fadeInUp 0.8s ease-out;
-}
-
 /* 统计数据 */
 .title-stats {
   display: inline-flex;
@@ -520,7 +478,7 @@ body.dark-mode .title-badge {
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 380px;
+  height: 520px;
 }
 
 .slide-wrapper {
@@ -1032,7 +990,7 @@ body.dark-mode .card-icon-wrapper {
   }
   
   .carousel-container {
-    height: 340px;
+    height: 440px;
   }
 }
 
@@ -1050,11 +1008,6 @@ body.dark-mode .card-icon-wrapper {
     letter-spacing: 1px;
   }
   
-  .title-description {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  
   .title-stats {
     padding: 12px 20px;
     gap: 16px;
@@ -1065,7 +1018,7 @@ body.dark-mode .card-icon-wrapper {
   }
   
   .carousel-container {
-    height: 280px;
+    height: 360px;
   }
   
   .carousel-arrow {
@@ -1118,10 +1071,6 @@ body.dark-mode .card-icon-wrapper {
     font-size: 24px;
   }
   
-  .title-description {
-    font-size: 13px;
-  }
-  
   .title-stats {
     padding: 10px 16px;
     gap: 12px;
@@ -1136,7 +1085,7 @@ body.dark-mode .card-icon-wrapper {
   }
   
   .carousel-container {
-    height: 220px;
+    height: 280px;
   }
   
   .term-overlay {

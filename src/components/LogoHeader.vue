@@ -36,7 +36,7 @@ const pageTitle = computed(() => {
   const path = route.path
   
   if (path === '/' || path === '/home') {
-    return '电梯安全科普平台'
+    return '电梯安全运维在线平台'
   } else if (path === '/regulations') {
     return '法规天地'
   } else if (path === '/image-text') {

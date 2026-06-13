@@ -83,27 +83,27 @@ function handleNavClick(item: MenuItem) {
 
 <style scoped>
 .bottom-navbar {
-  position: fixed;
-  bottom: 0;
+  position: sticky;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 90;
   display: flex;
   justify-content: center;
-  padding: 0 16px 8px;
+  padding: 8px 16px;
   background: var(--bg-overlay);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-top: 1px solid var(--border-color);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: all var(--transition-base);
 }
 
-/* 顶部渐变装饰线 */
-.bottom-navbar::before {
+/* 底部渐变装饰线 */
+.bottom-navbar::after {
   content: '';
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   height: 1px;
