@@ -15,27 +15,7 @@
           <div class="hero-glow hero-glow-3"></div>
         </div>
         <div class="platform-title">
-          <div class="title-badge">
-            <span class="badge-dot"></span>
-            <span class="badge-text">安全教育</span>
-          </div>
           <h1 class="title-main">电梯安全运维在线平台</h1>
-          <div class="title-stats">
-            <div class="stat-item">
-              <span class="stat-value">4</span>
-              <span class="stat-label">专栏内容</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-value">24h</span>
-              <span class="stat-label">随时学习</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-value">100%</span>
-              <span class="stat-label">免费开放</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -98,10 +78,6 @@
 
       <!-- 三个功能卡片区域 -->
       <div class="cards-section">
-        <div class="section-header">
-          <h2 class="section-title">探索学习内容</h2>
-          <p class="section-subtitle">选择您感兴趣的安全知识领域</p>
-        </div>
         <div class="cards-container">
           <!-- 法规天地卡片 -->
           <div class="feature-card card-regulations">
@@ -355,45 +331,6 @@ body.dark-mode .hero-glow {
   66% { transform: translate(-15px, 15px) scale(0.95); }
 }
 
-/* 标题徽章 */
-.title-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
-  border: 1px solid var(--primary-200);
-  border-radius: var(--radius-full);
-  margin-bottom: 20px;
-  animation: fadeInDown 0.6s ease-out;
-}
-
-body.dark-mode .title-badge {
-  background: linear-gradient(135deg, var(--primary-900), var(--primary-800));
-  border-color: var(--primary-700);
-}
-
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--primary-color);
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.8); }
-}
-
-.badge-text {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--primary-color);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
 /* 主标题 */
 .title-main {
   font-size: 42px;
@@ -413,45 +350,6 @@ body.dark-mode .title-badge {
 @keyframes gradientShift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
-}
-
-/* 统计数据 */
-.title-stats {
-  display: inline-flex;
-  align-items: center;
-  gap: 24px;
-  padding: 14px 28px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-sm);
-  animation: scaleIn 0.9s ease-out;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.stat-value {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--primary-color);
-  line-height: 1.2;
-}
-
-.stat-label {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  font-weight: 500;
-}
-
-.stat-divider {
-  width: 1px;
-  height: 32px;
-  background: var(--border-color);
 }
 
 /* ========== 轮播器区域 ========== */
@@ -712,26 +610,6 @@ body.dark-mode .title-badge {
 .cards-section {
   width: 100%;
   padding: 0 0 20px;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.section-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 8px;
-  letter-spacing: 0.5px;
-}
-
-.section-subtitle {
-  font-size: 14px;
-  color: var(--text-tertiary);
-  margin: 0;
-  font-weight: 400;
 }
 
 .cards-container {
@@ -1008,14 +886,6 @@ body.dark-mode .card-icon-wrapper {
     letter-spacing: 1px;
   }
   
-  .title-stats {
-    padding: 12px 20px;
-    gap: 16px;
-  }
-  
-  .stat-value {
-    font-size: 18px;
-  }
   
   .carousel-container {
     height: 360px;
@@ -1044,9 +914,6 @@ body.dark-mode .card-icon-wrapper {
     white-space: normal;
   }
   
-  .section-title {
-    font-size: 24px;
-  }
   
   .cards-container {
     grid-template-columns: 1fr;
@@ -1071,18 +938,6 @@ body.dark-mode .card-icon-wrapper {
     font-size: 24px;
   }
   
-  .title-stats {
-    padding: 10px 16px;
-    gap: 12px;
-  }
-  
-  .stat-value {
-    font-size: 16px;
-  }
-  
-  .stat-label {
-    font-size: 10px;
-  }
   
   .carousel-container {
     height: 280px;
@@ -1107,13 +962,6 @@ body.dark-mode .card-icon-wrapper {
     height: 34px;
   }
   
-  .section-header {
-    margin-bottom: 24px;
-  }
-  
-  .section-title {
-    font-size: 22px;
-  }
   
   .card-icon-wrapper {
     width: 40px;
