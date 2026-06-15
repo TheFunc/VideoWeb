@@ -77,7 +77,8 @@ const pageSubtitle = computed(() => {
   width: 100%;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: var(--bg-overlay);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(59, 130, 246, 0.03) 100%),
+              var(--bg-overlay);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-base);

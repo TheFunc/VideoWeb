@@ -91,11 +91,8 @@ function handleNavClick(item: MenuItem) {
   display: flex;
   justify-content: center;
   padding: 8px 16px;
-  background: var(--bg-overlay);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
   transition: all var(--transition-base);
 }
 
@@ -106,15 +103,14 @@ function handleNavClick(item: MenuItem) {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--primary-color) 15%,
-    var(--primary-light) 50%,
-    var(--primary-color) 85%,
+    rgba(255, 255, 255, 0.4) 15%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.4) 85%,
     transparent 100%
   );
-  opacity: 0.4;
 }
 
 .navbar-container {
@@ -148,12 +144,8 @@ function handleNavClick(item: MenuItem) {
   inset: 0;
   border-radius: var(--radius-lg);
   opacity: 0;
-  background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
+  background: rgba(255, 255, 255, 0.15);
   transition: opacity var(--transition-base);
-}
-
-body.dark-mode .nav-item-bg {
-  background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-800) 100%);
 }
 
 .nav-item:hover .nav-item-bg {
@@ -162,6 +154,7 @@ body.dark-mode .nav-item-bg {
 
 .nav-item.active .nav-item-bg {
   opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* 发光效果 */
@@ -197,8 +190,8 @@ body.dark-mode .nav-glow {
   font-size: 22px;
   line-height: 1;
   transition: all var(--transition-spring);
-  filter: grayscale(20%);
-  opacity: 0.7;
+  filter: grayscale(0%);
+  opacity: 0.9;
 }
 
 .nav-item:hover .nav-icon {
@@ -218,21 +211,21 @@ body.dark-mode .nav-glow {
   position: relative;
   z-index: 1;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
-  color: var(--text-tertiary);
+  color: rgba(255, 255, 255, 0.75);
   transition: all var(--transition-base);
   letter-spacing: 0.3px;
 }
 
 .nav-item:hover .nav-text {
-  color: var(--text-secondary);
+  color: #ffffff;
   transform: translateY(-1px);
 }
 
 .nav-item.active .nav-text {
-  color: var(--primary-color);
-  font-weight: 600;
+  color: #ffffff;
+  font-weight: 700;
   transform: translateY(-1px);
 }
 
