@@ -60,23 +60,27 @@
               </svg>
             </button>
 
-            <!-- 指示器 -->
-            <div class="carousel-indicators">
-              <span
-                v-for="(image, index) in images"
-                :key="index"
-                class="indicator"
-                :class="{ active: currentIndex === index }"
-                @click="goToSlide(index)"
-              >
-                <span class="indicator-dot"></span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- 指示器 -->
+    <div class="carousel-indicators">
+      <span
+        v-for="(image, index) in images"
+        :key="index"
+        class="indicator"
+        :class="{ active: currentIndex === index }"
+        @click="goToSlide(index)"
+      >
+        <span class="indicator-dot"></span>
+      </span>
+    </div>
+  </div>
 
-      <!-- 三个功能卡片区域 -->
+</div>
+</div>
+
+<!-- 轮播器分隔线 -->
+<div class="carousel-divider"></div>
+
+<!-- 三个功能卡片区域 -->
       <div class="cards-section">
         <div class="cards-container">
           <!-- 法规天地卡片 -->
@@ -460,6 +464,15 @@ body.dark-mode .hero-glow {
 .term-fade-leave-to {
   opacity: 0;
   transform: translateY(-12px);
+}
+
+/* 轮播器分隔线 */
+.carousel-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--primary-color);
+  margin-bottom: 40px;
+  border-radius: 1px;
 }
 
 /* 暗角效果 */

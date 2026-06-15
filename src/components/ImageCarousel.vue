@@ -108,6 +108,9 @@
           </button>
         </div>
       </div>
+
+      <!-- 蓝色装饰线 -->
+      <div class="carousel-divider"></div>
     </div>
 
     <!-- 加载状态 -->
@@ -555,6 +558,31 @@ onUnmounted(() => {
 
 .slide-action-btn:hover svg {
   transform: translateX(3px);
+}
+
+/* 蓝色装饰线 */
+.carousel-divider {
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), var(--primary-light), var(--primary-color), transparent);
+  border-radius: 2px;
+  margin: 28px auto 0;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .carousel-divider {
+    width: 80%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-divider {
+    width: 90%;
+    height: 2px;
+    margin-top: 16px;
+  }
 }
 
 /* ========== 控制面板 ========== */
