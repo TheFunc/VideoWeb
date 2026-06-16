@@ -55,7 +55,7 @@ const menuItems: MenuItem[] = [
     path: '/video-warning'
   },
   {
-    label: '电梯资料',
+    label: '电梯资料管理',
     icon: '📁',
     path: 'http://127.0.0.1:8000/login',
     external: true
@@ -87,6 +87,8 @@ function handleNavClick(item: MenuItem) {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  min-width: 100vw;
   z-index: 90;
   display: flex;
   justify-content: center;
@@ -210,12 +212,12 @@ body.dark-mode .nav-glow {
 .nav-text {
   position: relative;
   z-index: 1;
-  font-size: 11px;
+  font-size: 22px;
   font-weight: 600;
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.75);
   transition: all var(--transition-base);
-  letter-spacing: 0.3px;
+  letter-spacing: 1px;
 }
 
 .nav-item:hover .nav-text {

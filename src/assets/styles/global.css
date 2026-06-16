@@ -259,34 +259,58 @@ body.dark-mode::after {
   min-height: 100vh;
 }
 
-/* ========== 滚动条样式 ========== */
+/* ========== 滚动条样式 - 不滚动时隐藏 ========== */
+/* Firefox 滚动条 - 细且不滚动时透明 */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* 页面滚动时或鼠标移入时显示滚动条 */
+html:active,
+html:focus-within,
+html:hover {
+  scrollbar-color: var(--primary-400) transparent;
+}
+
+/* Webkit 内核 (Chrome/Safari/Edge) */
+/* 默认：滚动条占用空间（防止布局偏移），但透明不可见 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: transparent;
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--primary-400) 0%, var(--primary-600) 100%);
+  background: transparent;
   border-radius: var(--radius-full);
-  transition: background var(--transition-base);
+  transition: background 0.35s ease;
+}
+
+/* 滚动或悬停时显示滚动条 */
+html:hover::-webkit-scrollbar-thumb,
+html:focus-within::-webkit-scrollbar-thumb,
+html:active::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-400) 0%, var(--primary-600) 100%);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--primary-300) 0%, var(--primary-500) 100%);
+  background: linear-gradient(180deg, var(--primary-300) 0%, var(--primary-500) 100%) !important;
 }
 
-/* 深色模式滚动条 */
-body.dark-mode ::-webkit-scrollbar-thumb {
+/* 深色模式 */
+body.dark-mode html:hover::-webkit-scrollbar-thumb,
+body.dark-mode html:focus-within::-webkit-scrollbar-thumb,
+body.dark-mode html:active::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--primary-700) 0%, var(--primary-500) 100%);
 }
 
 body.dark-mode ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--primary-600) 0%, var(--primary-400) 100%);
+  background: linear-gradient(180deg, var(--primary-600) 0%, var(--primary-400) 100%) !important;
 }
 
 /* ========== 页面切换动画 ========== */
